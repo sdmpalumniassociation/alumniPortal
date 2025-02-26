@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/sdmp-logo.png';
+import usersData from '../assets/data/Users.json';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '', // for email/username/phone
     password: ''
   });
+  const [showDialog, setShowDialog] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,11 +18,33 @@ const Login = () => {
       ...prevState,
       [name]: value
     }));
+    setError(''); // Clear error when user types
+  };
+
+  const validateCredentials = () => {
+    return usersData.find(user => 
+      (user.email === formData.identifier || 
+       user.username === formData.identifier || 
+       user.phone === formData.identifier) && 
+      user.password === formData.password
+    );
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login attempt:', formData);
+    const user = validateCredentials();
+    
+    if (user) {
+      setShowDialog(true);
+      setError('');
+    } else {
+      setError('Invalid credentials. Please try again.');
+    }
+  };
+
+  const handleDialogClose = () => {
+    setShowDialog(false);
+    navigate('/user-homepage '); // Navigate to LandingPage after successful login
   };
 
   return (
@@ -33,8 +59,8 @@ const Login = () => {
               <label>Email/Username/Phone Number</label>
               <input
                 type="text"
-                name="email"
-                value={formData.email}
+                name="identifier"
+                value={formData.identifier}
                 onChange={handleChange}
                 className="login-input"
                 placeholder="Enter Email/Username/Phone Number"
@@ -53,6 +79,7 @@ const Login = () => {
                 required
               />
             </div>
+            {error && <div className="error-message">{error}</div>}
             <div className="login-links">
               <Link to="/register" className="create-account">
                 New User? Create account here
@@ -67,6 +94,15 @@ const Login = () => {
           </form>
         </div>
       </div>
+
+      {showDialog && (
+        <div className="dialog">
+          <div className="dialog-content">
+            <p>Login successful!</p>
+            <button onClick={handleDialogClose} className="dialog-button">Okay</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/images/sdmp-logo.png';
+import { Link, useNavigate } from 'react-router-dom';
+// import logo from '../assets/images/sdmp-logo.png';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +18,8 @@ const Register = () => {
   });
 
   const [usernameSuggestions, setUsernameSuggestions] = useState([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -26,14 +28,12 @@ const Register = () => {
       setFormData(prevState => ({
         ...prevState,
         [name]: checked,
-        // If checkbox is checked, copy phone number to WhatsApp
         whatsappNumber: checked ? prevState.phone : prevState.whatsappNumber
       }));
     } else {
       setFormData(prevState => ({
         ...prevState,
         [name]: value,
-        // If phone is updated and WhatsApp is same as phone, update WhatsApp too
         ...(name === 'phone' && prevState.whatsappSameAsPhone 
           ? { whatsappNumber: value } 
           : {})
@@ -57,9 +57,31 @@ const Register = () => {
     setUsernameSuggestions(suggestions);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registration attempt:', formData);
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setShowDialog(true);
+      } else {
+        throw new Error('Registration failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Registration failed. Please try again.');
+    }
+  };
+
+  const handleDialogClose = () => {
+    setShowDialog(false);
+    navigate('/login');
   };
 
   const branches = [
@@ -277,6 +299,15 @@ const Register = () => {
           </form>
         </div>
       </div>
+
+      {showDialog && (
+        <div className="dialog">
+          <div className="dialog-content">
+            <p>Registration successful!</p>
+            <button onClick={handleDialogClose} className="dialog-button">Okay</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
