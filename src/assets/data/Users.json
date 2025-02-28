@@ -1,0 +1,28 @@
+[
+  {
+    "fullName": "Kishan K Nayak",
+    "username": "kishannk11",
+    "email": "contactkishan20@gmail.com",
+    "countryCode": "+91",
+    "phone": "9740684686",
+    "whatsappSameAsPhone": true,
+    "whatsappNumber": "9740684686",
+    "password": "123",
+    "confirmPassword": "123",
+    "graduationYear": "2018",
+    "branch": "Computer Science"
+  },
+  {
+    "fullName": "Ranjith",
+    "username": "ranjith12",
+    "email": "ranjith@gmail.com",
+    "countryCode": "+91",
+    "phone": "9686894686",
+    "whatsappSameAsPhone": true,
+    "whatsappNumber": "9686894686",
+    "password": "132456",
+    "confirmPassword": "123456",
+    "graduationYear": "2018",
+    "branch": "Computer Science"
+  }
+]
