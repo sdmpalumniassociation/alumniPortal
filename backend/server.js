@@ -1,39 +1,36 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const mongoose = require('mongoose');
 const cors = require('cors');
+const userRoutes = require('./routes/userRoutes');
+
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Endpoint to save user data
-app.post('/api/register', (req, res) => {
-  const userData = req.body;
-  const filePath = path.join(__dirname, '../src/assets/data/Users.json');
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/alumniPortal', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
-  // Read existing users
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    let users = [];
-    if (!err) {
-      users = JSON.parse(data);
-    }
+// Routes
+app.use('/api/users', userRoutes);
 
-    // Add new user
-    users.push(userData);
-
-    // Write back to file
-    fs.writeFile(filePath, JSON.stringify(users, null, 2), (err) => {
-      if (err) {
-        res.status(500).json({ error: 'Error saving user data' });
-      } else {
-        res.json({ message: 'Registration successful' });
-      }
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: 'Something went wrong!',
+        error: err.message
     });
-  });
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 }); 
