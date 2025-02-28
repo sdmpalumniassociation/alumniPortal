@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import logo from '../assets/images/sdmp-logo.png';
+import { API_URL } from '../util/config';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -59,8 +60,15 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Check if passwords match
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
         try {
-            const response = await fetch('http://localhost:5000/api/register', {
+            const response = await fetch(`${API_URL}/users/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,14 +76,17 @@ const Register = () => {
                 body: JSON.stringify(formData),
             });
 
+            const data = await response.json();
+
             if (response.ok) {
                 setShowDialog(true);
             } else {
-                throw new Error('Registration failed');
+                // Show the error message from the server
+                alert(data.message || 'Registration failed');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Registration failed. Please try again.');
+            alert('Network error. Please check your connection and try again.');
         }
     };
 

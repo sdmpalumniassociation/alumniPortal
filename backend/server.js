@@ -5,12 +5,20 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+
+// Apply CORS with options
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/alumniPortal', {
+mongoose.connect('mongodb+srv://ranjithchandran220:goZIerWoJAn93Rpt@cluster0.06c3v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -30,7 +38,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 }); 

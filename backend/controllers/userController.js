@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { generateToken } = require('../utils/jwt');
 
 exports.register = async (req, res) => {
     try {
@@ -14,9 +15,13 @@ exports.register = async (req, res) => {
             branch
         } = req.body;
 
-        // Check if user already exists
+        // Check if user already exists with email, username, or phone
         const existingUser = await User.findOne({
-            $or: [{ email }, { username }]
+            $or: [
+                { email },
+                { username },
+                { phone },
+            ]
         });
 
         if (existingUser) {
@@ -24,7 +29,9 @@ exports.register = async (req, res) => {
                 success: false,
                 message: existingUser.email === email
                     ? 'Email already registered'
-                    : 'Username already taken'
+                    : existingUser.username === username
+                        ? 'Username already taken'
+                        : 'Phone number already registered'
             });
         }
 
@@ -58,6 +65,52 @@ exports.register = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Registration failed',
+            error: error.message
+        });
+    }
+};
+
+exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Check if user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
+            });
+        }
+
+        // Check password
+        const isPasswordValid = await user.comparePassword(password);
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
+            });
+        }
+
+        // Generate JWT token
+        const token = generateToken(user._id);
+
+        // Remove password from response
+        const userResponse = user.toObject();
+        delete userResponse.password;
+
+        res.status(200).json({
+            success: true,
+            message: 'Login successful',
+            token,
+            user: userResponse
+        });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Login failed',
             error: error.message
         });
     }
