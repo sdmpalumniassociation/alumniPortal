@@ -1,1 +1,1 @@
-export const API_URL = 'http://localhost:5001/api';
+export const API_URL = 'https://alumni-portal-backend-swart.vercel.app/api';
