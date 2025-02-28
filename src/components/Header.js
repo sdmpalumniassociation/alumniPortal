@@ -39,12 +39,12 @@ const Header = () => {
                         Home
                     </NavLink>
                     {isLoggedIn ? (
-                        <button
+                        <NavLink
                             onClick={handleLogout}
                             className="header-link logout-button"
                         >
                             Logout
-                        </button>
+                        </NavLink>
                     ) : (
                         <NavLink
                             to="/login"
