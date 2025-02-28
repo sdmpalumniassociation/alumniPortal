@@ -3,9 +3,9 @@ import ContactUs from '../components/ContactUs';
 import AlumniLogo from '../assets/images/sdmp-logo.png';
 import CollegeImage from '../assets/images/sdmpcollege.jpg';
 
-const Homepage = () => {
+const LandingPage = () => {
   return (
-    <div className="homepage">
+    <div className="landing-page">
       {/* Our Story Section */}
       <section className="our-story-section">
         <div className="story-container">
@@ -41,4 +41,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default LandingPage;
