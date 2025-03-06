@@ -1,0 +1,257 @@
+.alumni-page-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.alumni-side-navbar {
+  width: 250px;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-right: 1px solid #ddd;
+}
+
+.alumni-main-content {
+  flex: 1;
+  padding: 0;
+  max-width: calc(100% - 250px);
+  width: 100%;
+  background-color: #FFF5E6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-message {
+  font-size: 20px;
+  font-weight: 500;
+  color: #333;
+  margin-top: 50px;
+}
+
+.alumni-info-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px;
+  width: 100%;
+}
+
+.alumni-info-container {
+  background-color: #FFE5B4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+  padding: 30px;
+  position: relative;
+}
+
+.alumni-profile-section {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.alumni-photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 150px;
+}
+
+.alumni-photo {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.photo-label {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+.alumni-details-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: flex-start;
+  padding-top: 5px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.section-divider {
+  border: none;
+  height: 1px;
+  background-color: #333;
+  margin: 25px 0;
+}
+
+.education-section {
+  margin-bottom: 30px;
+  padding-left: 15px;
+}
+
+.education-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.education-item {
+  margin-left: 35px;
+  margin-top: 10px;
+}
+
+.education-item h4 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.contact-section {
+  margin-bottom: 30px;
+  padding-left: 15px;
+}
+
+.contact-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.contact-details {
+  margin-left: 35px;
+}
+
+.contact-item {
+  margin-top: 10px;
+}
+
+.contact-item h4 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.back-button {
+  background-color: #E5E5E5;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #D5D5D5;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .alumni-side-navbar {
+    width: 200px;
+  }
+  
+  .alumni-main-content {
+    max-width: calc(100% - 200px);
+  }
+}
+
+@media (max-width: 768px) {
+  .alumni-page-layout {
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .alumni-side-navbar {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+  }
+  
+  .alumni-main-content {
+    max-width: 100%;
+    overflow-y: auto;
+  }
+  
+  .alumni-info-wrapper {
+    padding: 15px;
+  }
+
+  .alumni-info-container {
+    padding: 20px;
+  }
+  
+  .alumni-profile-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .alumni-photo-container {
+    margin-bottom: 5px;
+  }
+
+  .alumni-details-container {
+    width: 100%;
+  }
+
+  .detail-item {
+    align-items: flex-start;
+  }
+  
+  .education-section {
+    padding-left: 0;
+  }
+  
+  .education-item {
+    margin-left: 20px;
+  }
+  
+  .contact-section {
+    padding-left: 0;
+  }
+  
+  .contact-details {
+    margin-left: 20px;
+  }
+} 

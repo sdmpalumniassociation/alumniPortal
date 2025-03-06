@@ -1,0 +1,194 @@
+[
+    {
+        "fullName": "Mr. Santhosha",
+        "designation": "Principal",
+        "phoneNumber": "+919845893731",
+        "emailId": "santhoshasdm@gmail.com",
+        "profilePhoto": "../../assets/images/Santhosha.jpg",
+        "branch": "Computer Science & Engineering"
+    },
+    {
+        "fullName": "Mr. Dinesh",
+        "designation": "Head of Department, Computer Science & Engineering",
+        "phoneNumber": "+919731304263",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Dinesh_HOD.jpg",
+        "branch": "Computer Science & Engineering"
+    },
+    {
+        "fullName": "Mr. Varadaraj A S",
+        "designation": "Lecturer",
+        "phoneNumber": "+919036987529",
+        "emailId": "varadarajballal@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/Varadaraj.jpg",
+        "branch": "Computer Science & Engineering"
+    },
+    {
+        "fullName": "Mrs. Anushree B K",
+        "designation": "Lecturer",
+        "phoneNumber": "+919902817239",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Anushree.jpg",
+        "branch": "Computer Science & Engineering"
+    },
+    {
+        "fullName": "Mrs. Renita V Fernandes",
+        "designation": "Lecturer",
+        "phoneNumber": "+919663767505",
+        "emailId": "renita@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/Renita.jpg",
+        "branch": "Computer Science & Engineering"
+    },
+    {
+        "fullName": "Mrs. Prithvi V",
+        "designation": "Lecturer",
+        "phoneNumber": "+919880266894",
+        "emailId": "prithvi@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/Prithvi.jpg",
+        "branch": "Computer Science & Engineering"
+    },
+    {
+        "fullName": "Ms. Mary Smitha",
+        "designation": "Head of Department, Electronics & Communication",
+        "phoneNumber": "+919480053544",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Mary.jpg",
+        "branch": "Electronics & Communication"
+    },
+    {
+        "fullName": "Mr. Amaresha Hebbar A",
+        "designation": "Lecturer",
+        "phoneNumber": "+919741485608",
+        "emailId": "amareshhebbar@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/Amaresha.jpg",
+        "branch": "Electronics & Communication"
+    },
+    {
+        "fullName": "Mr. Avaneesh P",
+        "designation": "Lecturer",
+        "phoneNumber": "+919844667993",
+        "emailId": "avaneeshp@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/Avaneesh.jpg",
+        "branch": "Electronics & Communication"
+    },
+    {
+        "fullName": "Mr. Sampath Kumar k",
+        "designation": "Lecturer",
+        "phoneNumber": "+917624838196",
+        "emailId": "Sampathjn9@gmail.com",
+        "profilePhoto": "../../assets/images/Sampath.jpg",
+        "branch": "Electronics & Communication"
+    },
+    {
+        "fullName": "Ms. Shadvala K Sebastian",
+        "designation": "Lecturer",
+        "phoneNumber": "+918105439091",
+        "emailId": "shadvala@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/Shadvala.jpg",
+        "branch": "Electronics & Communication"
+    },
+    {
+        "fullName": "Ms. Thripthi shetty B M",
+        "designation": "Head of Department, Civil Engineering",
+        "phoneNumber": "",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Thripthi.jpg",
+        "branch": "Civil Engineering"
+    },
+    {
+        "fullName": "Mr. Ashwin S Marathe",
+        "designation": "Lecturer",
+        "phoneNumber": "+918971947391",
+        "emailId": "ashwin.kervashe@gmail.com",
+        "profilePhoto": "../../assets/images/Ashwin.jpg",
+        "branch": "Civil Engineering"
+    },
+    {
+        "fullName": "Mr. Praveena",
+        "designation": "Lecturer",
+        "phoneNumber": "+919535109756",
+        "emailId": "er.pbgk@gmail.com",
+        "profilePhoto": "../../assets/images/Praveena.jpg",
+        "branch": "Civil Engineering"
+    },
+    {
+        "fullName": "Mr. Ishwara Sharma P S",
+        "designation": "Lecturer",
+        "phoneNumber": "",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Ishwara.jpg",
+        "branch": "Civil Engineering"
+    },
+    {
+        "fullName": "Mr. Rajesh Kakrannaya A",
+        "designation": "Head of Department, Basic Science",
+        "phoneNumber": "+919945997150",
+        "emailId": "kakrannaya.rajesh@gmail.com",
+        "profilePhoto": "../../assets/images/Rajesh.jpg",
+        "branch": "Basic Science"
+    },
+    {
+        "fullName": "Mr. Shankar Bhat H R",
+        "designation": "Lecturer",
+        "phoneNumber": "+918971265054",
+        "emailId": "shankarbhathr@gmail.com",
+        "profilePhoto": "../../assets/images/Shankar.jpg",
+        "branch": "Basic Science"
+    },
+    {
+        "fullName": "Mrs. Shashikala K A",
+        "designation": "Lecturer",
+        "phoneNumber": "",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Shashikala.jpg",
+        "branch": "Basic Science"
+    },
+    {
+        "fullName": "Mr. Shreyank",
+        "designation": "Head of Department, Mechanical Engineering",
+        "phoneNumber": "",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Dinesh_HOD.jpg",
+        "branch": "Mechanical Engineering"
+    },
+    {
+        "fullName": "Mr. Mithun Kumar",
+        "designation": "Lecturer",
+        "phoneNumber": "+919740840503",
+        "emailId": "Mithunjain27@gmail.com",
+        "profilePhoto": "../../assets/images/Mithun.jpg",
+        "branch": "Mechanical Engineering"
+    },
+    {
+        "fullName": "Mr. Shiva Prasad",
+        "designation": "Lecturer",
+        "phoneNumber": "+919535284720",
+        "emailId": "shivaprasad@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/Shiva.jpg",
+        "branch": "Mechanical Engineering"
+    },
+    {
+        "fullName": "Mr. Shivaraj P",
+        "designation": "Lecturer",
+        "phoneNumber": "",
+        "emailId": "",
+        "profilePhoto": "../../assets/images/Shivaraj.jpg",
+        "branch": "Mechanical Engineering"
+    },
+    {
+        "fullName": "Mr. Padmaraj Annaji",
+        "designation": "Lecturer",
+        "phoneNumber": "+917795122267",
+        "emailId": "padmarajannaji@gmail.com",
+        "profilePhoto": "../../assets/images/Padmaraj.jpg",
+        "branch": "Mechanical Engineering"
+    },
+    {
+        "fullName": "Mr. Sai Charan C H",
+        "designation": "Lecturer",
+        "phoneNumber": "+918660811972",
+        "emailId": "saicharan@sdmpolytechnic.in",
+        "profilePhoto": "../../assets/images/SaiCharan.jpg",
+        "branch": "Mechanical Engineering"
+    }
+]
