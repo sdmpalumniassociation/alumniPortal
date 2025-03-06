@@ -11,6 +11,7 @@ import UserHomepage from './pages/UserHomepage';
 import Profile from './pages/Profile';
 import Faculties from './pages/Faculties';
 import AlumniList from './pages/AlumniList';
+import AlumniInfo from './pages/AlumniInfo';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/faculties" element={<Faculties />} />
             <Route path="/alumni-list" element={<AlumniList />} />
+            <Route path="/alumni-info/:id" element={<AlumniInfo />} />
           </Routes>
         </main>
         <Footer />
