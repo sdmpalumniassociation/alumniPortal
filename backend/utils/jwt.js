@@ -4,8 +4,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-here'; // In produ
 const JWT_EXPIRE = '24h';
 
 // Generate JWT token
-const generateToken = (userId) => {
-    return jwt.sign({ id: userId }, JWT_SECRET, {
+const generateToken = (userId, role) => {
+    return jwt.sign({
+        id: userId,
+        role: role
+    }, JWT_SECRET, {
         expiresIn: JWT_EXPIRE
     });
 };

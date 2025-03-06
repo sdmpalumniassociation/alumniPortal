@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
+    role: {
+        type: String,
+        default: 'alumni',
+        enum: ['alumni', 'admin'], // restricting possible roles
+        required: true
+    },
     countryCode: {
         type: String,
         required: true
@@ -27,6 +33,10 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
+    },
+    hidePhone: {
+        type: Boolean,
+        default: false
     },
     whatsappNumber: {
         type: String,
@@ -43,6 +53,18 @@ const userSchema = new mongoose.Schema({
     branch: {
         type: String,
         required: true
+    },
+    workingAs: {
+        type: String,
+        default: 'Not specified'
+    },
+    expertise: {
+        type: String,
+        default: 'Not specified'
+    },
+    imageUrl: {
+        type: String,
+        default: 'default-profile.jpg'
     }
 }, {
     timestamps: true
