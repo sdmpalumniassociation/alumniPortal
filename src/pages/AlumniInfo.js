@@ -114,11 +114,11 @@ function AlumniInfo() {
                         <div className="alumni-profile-section">
                             <div className="alumni-photo-container">
                                 <img
-                                    src={`${API_URL}/uploads/profiles/${alumniData.imageUrl}`}
+                                    src={alumniData.imageUrl}
                                     alt={alumniData.fullName}
                                     className="alumni-photo"
                                     onError={(e) => {
-                                        e.target.src = `${API_URL}/uploads/profiles/default-profile.jpg`;
+                                        e.target.src = `https://ny2fsuwtzwiq1t6s.public.blob.vercel-storage.com/default-user-JkNfvWTp7X1p14TXs1462jMc4PgNew.png`;
                                     }}
                                 />
                             </div>
@@ -170,7 +170,7 @@ function AlumniInfo() {
 
                         <div className="back-button-container">
                             <button className="back-button" onClick={handleBack}>
-                             Back
+                                Back
                             </button>
                         </div>
                     </div>

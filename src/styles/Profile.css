@@ -372,3 +372,25 @@
 .profile-image-upload input[type="file"]:hover {
     border-color: #FF6B00;
 }
+
+.sidebar-item.logout {
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar-item.logout:hover {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.sidebar-item.logout span {
+    margin-left: 10px;
+}

@@ -95,7 +95,14 @@ function AlumniList() {
                     {filteredAlumni.map((alumni) => (
                         <div key={alumni.id} className="alumni-card">
                             <div className="alumni-info">
-                                <img src={`${API_URL}/uploads/profiles/${alumni.imageUrl}`} alt={alumni.fullName} className="alumni-image" />
+                                <img
+                                    src={alumni.imageUrl}
+                                    alt={alumni.fullName}
+                                    className="alumni-image"
+                                    onError={(e) => {
+                                        e.target.src = `https://ny2fsuwtzwiq1t6s.public.blob.vercel-storage.com/default-user-JkNfvWTp7X1p14TXs1462jMc4PgNew.png`;
+                                    }}
+                                />
                                 <div className="alumni-details">
                                     <h3>{alumni.fullName}</h3>
                                     <p>{alumni.branch} - ({alumni.graduatedYear})</p>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/images/sdmp-logo.png';
 
 
 const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         // Check if user is logged in
@@ -40,10 +41,10 @@ const Header = () => {
                     </NavLink>
                     {isLoggedIn ? (
                         <NavLink
-                            onClick={handleLogout}
-                            className="header-link logout-button"
+                            to="/user-homepage"
+                            className="header-link"
                         >
-                            Logout
+                            Dashboard
                         </NavLink>
                     ) : (
                         <NavLink
