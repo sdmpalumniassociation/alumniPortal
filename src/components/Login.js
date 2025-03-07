@@ -1,34 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../util/config';
 import logo from '../assets/images/sdmp-logo.png';
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        email: '',
+        identifier: '',
         password: ''
     });
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Check if user is already logged in
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            navigate('/user-homepage');
-        }
-    }, [navigate]);
-
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+        setError('');
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         setError('');
 
         try {
@@ -43,18 +37,17 @@ const Login = () => {
             const data = await response.json();
 
             if (response.ok) {
-                // Store token and user data in localStorage
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
-
-                // Force a page reload to update header state
-                window.location.href = '/user-homepage';
+                navigate('/user-homepage');
             } else {
                 setError(data.message || 'Login failed');
             }
         } catch (error) {
-            console.error('Login error:', error);
-            setError('Network error. Please check your connection and try again.');
+            console.error('Error:', error);
+            setError('Network error. Please try again later.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -66,8 +59,8 @@ const Login = () => {
                 </div>
                 <div className="login-right">
                     <form onSubmit={handleSubmit} className="login-form">
-                        <h2 className="login-title">Welcome Back!</h2>
-                        <p className="login-subtitle">Login to your Alumni Account</p>
+                        <h2 className="login-title">Login to Alumni Portal</h2>
+                        <p className="login-subtitle">Welcome back to SDM Polytechnic Alumni Network</p>
 
                         {error && (
                             <div className="error-message">
@@ -76,14 +69,14 @@ const Login = () => {
                         )}
 
                         <div className="form-group">
-                            <label>Email</label>
+                            <label>Email / Alumni ID / Phone Number</label>
                             <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
+                                type="text"
+                                name="identifier"
+                                value={formData.identifier}
                                 onChange={handleChange}
                                 className="login-input"
-                                placeholder="Enter your email"
+                                placeholder="Enter your email, alumni ID, or phone number"
                                 required
                             />
                         </div>
@@ -101,26 +94,24 @@ const Login = () => {
                             />
                         </div>
 
-                        {error && <div className="error-message">{error}</div>}
-                        <div className="login-links">
-                            <Link to="/register" className="create-account">
-                                New User? Create account here
-                            </Link>
-                            <Link to="/forgot-password" className="forgot-password">
-                                Forgot Password
-                            </Link>
+                        <div className="forgot-password">
+                            <Link to="/forgot-password">Forgot Password?</Link>
                         </div>
-                        <button type="submit" className="login-button">
-                            Login
+
+                        <button type="submit" className="login-button" disabled={loading}>
+                            {loading ? 'Logging in...' : 'Login'}
                         </button>
 
+                        <div className="register-link">
+                            <p>Don't have an account?</p>
+                            <Link to="/register" className="create-account">
+                                Create Account
+                            </Link>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
-
     );
 };
 

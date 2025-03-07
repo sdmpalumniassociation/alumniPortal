@@ -1,12 +1,40 @@
 const User = require('../models/User');
 const { generateToken } = require('../utils/jwt');
+const { sendEmail } = require('../services/emailService');
+
+// Add this new function to generate the next Alumni ID
+const getNextAlumniId = async () => {
+    const lastUser = await User.findOne({}, { alumniId: 1 })
+        .sort({ alumniId: -1 });
+
+    if (!lastUser || !lastUser.alumniId) {
+        return 'SDMPAA0001';
+    }
+
+    const lastNumber = parseInt(lastUser.alumniId.slice(-4));
+    const nextNumber = lastNumber + 1;
+    return `SDMPAA${String(nextNumber).padStart(4, '0')}`;
+};
 
 const userController = {
+    getNextAlumniId: async (req, res) => {
+        try {
+            const nextAlumniId = await getNextAlumniId();
+            res.json({ nextAlumniId });
+        } catch (error) {
+            console.error('Error generating next Alumni ID:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Error generating Alumni ID'
+            });
+        }
+    },
+
     register: async (req, res) => {
         try {
             const {
                 fullName,
-                username,
+                alumniId,
                 email,
                 countryCode,
                 phone,
@@ -16,12 +44,12 @@ const userController = {
                 branch
             } = req.body;
 
-            // Check if user already exists with email, username, or phone
+            // Check if user already exists with email or phone
             const existingUser = await User.findOne({
                 $or: [
                     { email },
-                    { username },
                     { phone },
+                    { alumniId }
                 ]
             });
 
@@ -30,8 +58,8 @@ const userController = {
                     success: false,
                     message: existingUser.email === email
                         ? 'Email already registered'
-                        : existingUser.username === username
-                            ? 'Username already taken'
+                        : existingUser.alumniId === alumniId
+                            ? 'Alumni ID already exists'
                             : 'Phone number already registered'
                 });
             }
@@ -39,7 +67,7 @@ const userController = {
             // Create new user
             const user = new User({
                 fullName,
-                username,
+                alumniId,
                 email,
                 countryCode,
                 phone,
@@ -50,6 +78,19 @@ const userController = {
             });
 
             await user.save();
+
+            // Send welcome email
+            try {
+                await sendEmail(email, 'registration', {
+                    fullName,
+                    alumniId,
+                    email,
+                    branch,
+                    graduationYear
+                });
+            } catch (emailError) {
+                console.error('Failed to send welcome email:', emailError);
+            }
 
             // Remove password from response
             const userResponse = user.toObject();
@@ -73,14 +114,21 @@ const userController = {
 
     login: async (req, res) => {
         try {
-            const { email, password } = req.body;
+            const { identifier, password } = req.body;
 
-            // Check if user exists
-            const user = await User.findOne({ email });
+            // Check if user exists with email, alumniId, or phone
+            const user = await User.findOne({
+                $or: [
+                    { email: identifier },
+                    { alumniId: identifier },
+                    { phone: identifier }
+                ]
+            });
+
             if (!user) {
                 return res.status(401).json({
                     success: false,
-                    message: 'Invalid email or password'
+                    message: 'Invalid credentials'
                 });
             }
 
@@ -89,12 +137,12 @@ const userController = {
             if (!isPasswordValid) {
                 return res.status(401).json({
                     success: false,
-                    message: 'Invalid email or password'
+                    message: 'Invalid credentials'
                 });
             }
 
             // Generate JWT token
-            const token = generateToken(user._id);
+            const token = generateToken(user._id, user.role);
 
             // Remove password from response
             const userResponse = user.toObject();
@@ -241,9 +289,9 @@ const userController = {
                 expertise
             };
 
-            // If there's a file uploaded, add the image URL
-            if (req.file) {
-                updateData.imageUrl = req.file.filename;
+            // If there's a file uploaded, add the Blob URL
+            if (req.file && req.file.location) {
+                updateData.imageUrl = req.file.location;
             }
 
             const updatedUser = await User.findByIdAndUpdate(

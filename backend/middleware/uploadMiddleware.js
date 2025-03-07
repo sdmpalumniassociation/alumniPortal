@@ -1,22 +1,13 @@
 const multer = require('multer');
+const { put } = require('@vercel/blob');
 const path = require('path');
 const crypto = require('crypto');
 
-// Configure storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/profiles/');
-    },
-    filename: function (req, file, cb) {
-        // Generate a secure random filename
-        crypto.randomBytes(16, (err, raw) => {
-            if (err) return cb(err);
+// Configure Blob token
+const BLOB_TOKEN = "vercel_blob_rw_NY2fsuWtZwIQ1T6s_qeDP2lGd2K7r4NPEunqsgPc2KdUVYl";
 
-            // Use the original extension but with a random name
-            cb(null, raw.toString('hex') + path.extname(file.originalname));
-        });
-    }
-});
+// Configure memory storage instead of disk storage
+const storage = multer.memoryStorage();
 
 // File filter
 const fileFilter = (req, file, cb) => {
@@ -36,6 +27,33 @@ const upload = multer({
     },
     fileFilter: fileFilter
 });
+
+// Blob upload middleware
+const handleBlobUpload = async (req, res, next) => {
+    try {
+        if (!req.file) {
+            return next();
+        }
+
+        // Generate unique filename
+        const fileExt = path.extname(req.file.originalname);
+        const fileName = `${crypto.randomBytes(16).toString('hex')}${fileExt}`;
+
+        // Upload to Vercel Blob with token
+        const { url } = await put(fileName, req.file.buffer, {
+            access: 'public',
+            token: BLOB_TOKEN,
+            contentType: req.file.mimetype
+        });
+
+        // Add the blob URL to the request
+        req.file.location = url;
+        console.log(url);
+        next();
+    } catch (error) {
+        next(error);
+    }
+};
 
 // Error handling middleware
 const handleUploadError = (error, req, res, next) => {
@@ -64,5 +82,6 @@ const handleUploadError = (error, req, res, next) => {
 
 module.exports = {
     upload,
+    handleBlobUpload,
     handleUploadError
 }; 
