@@ -125,8 +125,8 @@ const userController = {
                 fullName: user.fullName,
                 branch: user.branch,
                 graduatedYear: user.graduationYear,
-                workingAs: "Not specified",
-                imageUrl: "https://via.placeholder.com/100"
+                workingAs: user.workingAs,
+                imageUrl: user.imageUrl
             }));
 
             res.status(200).json({
@@ -160,14 +160,14 @@ const userController = {
                 fullName: user.fullName,
                 graduatedYear: user.graduationYear,
                 branch: user.branch,
-                workingAs: "Not specified",
-                expertise: "Not specified",
+                workingAs: user.workingAs,
+                expertise: user.expertise,
                 education: "Education Details",
                 higherStudies: "Not specified",
                 email: user.email,
                 phone: user.hidePhone ? "xxxxxx" : `${user.countryCode} ${user.phone}`,
                 whatsappNumber: user.hidePhone ? "xxxxx" : `${user.countryCode} ${user.whatsappNumber}`,
-                imageUrl: "https://via.placeholder.com/150"
+                imageUrl: user.imageUrl
             };
 
             res.status(200).json({
