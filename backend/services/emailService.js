@@ -90,6 +90,26 @@ const emailTemplates = {
                 <p style="margin-top: 20px;">Best regards,<br>SDMP Alumni Association Team</p>
             </div>
         `
+    }),
+
+    broadcast: (data) => ({
+        subject: data.subject,
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #FF6B00;">SDMP Alumni Association</h2>
+                <div style="padding: 20px; background-color: #fff; border-radius: 5px;">
+                    <p>Dear ${escapeHtml(data.recipientName || 'Alumni')},</p>
+                    <p>Greetings from SDMP Alumni Association!</p>
+                    <div style="margin: 20px 0;">
+                        ${escapeHtml(data.message)}
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; color: #666;">
+                    This is a broadcast message from SDMP Alumni Association.
+                    Please do not reply to this email.
+                </p>
+            </div>
+        `
     })
 };
 
