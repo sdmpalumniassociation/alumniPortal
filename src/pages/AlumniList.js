@@ -95,7 +95,7 @@ function AlumniList() {
                     {filteredAlumni.map((alumni) => (
                         <div key={alumni.id} className="alumni-card">
                             <div className="alumni-info">
-                                <img src={alumni.imageUrl} alt={alumni.fullName} className="alumni-image" />
+                                <img src={`${API_URL}/uploads/profiles/${alumni.imageUrl}`} alt={alumni.fullName} className="alumni-image" />
                                 <div className="alumni-details">
                                     <h3>{alumni.fullName}</h3>
                                     <p>{alumni.branch} - ({alumni.graduatedYear})</p>
