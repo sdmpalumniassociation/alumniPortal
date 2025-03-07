@@ -217,7 +217,7 @@ function Profile() {
                                 <Form onSubmit={handleSubmit} className="profile-form">
                                     <div className="profile-image-upload">
                                         <img
-                                            src={previewUrl || `${API_URL}/uploads/profiles/${profile.imageUrl}`}
+                                            src={profile.imageUrl}
                                             alt="Profile"
                                             className="profile-image"
                                             onError={(e) => {
@@ -341,11 +341,11 @@ function Profile() {
                                 <div className="profile-info">
                                     <div className="profile-image-container">
                                         <img
-                                            src={`${API_URL}/uploads/profiles/${profile.imageUrl}`}
+                                            src={profile.imageUrl}
                                             alt="Profile"
                                             className="profile-image"
                                             onError={(e) => {
-                                                e.target.src = `${API_URL}/uploads/profiles/default-profile.jpg`;
+                                                e.target.src = `https://ny2fsuwtzwiq1t6s.public.blob.vercel-storage.com/default-user-JkNfvWTp7X1p14TXs1462jMc4PgNew.png`;
                                             }}
                                         />
                                     </div>
