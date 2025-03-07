@@ -18,7 +18,7 @@ function AlumniInfo() {
     expertise: "Expertise:",
     education: "Education:",
     higherStudies: "Higher Studies:",
-    imageUrl: "https://via.placeholder.com/150"
+    imageUrl: "../assets/images/default-user.png"
   };
 
   const handleBack = () => {
