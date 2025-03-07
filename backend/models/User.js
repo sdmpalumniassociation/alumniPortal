@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    username: {
+    alumniId: {
         type: String,
         required: true,
         unique: true,
@@ -65,6 +65,14 @@ const userSchema = new mongoose.Schema({
     imageUrl: {
         type: String,
         default: 'default-profile.jpg'
+    },
+    resetPasswordToken: {
+        type: String,
+        default: null
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null
     }
 }, {
     timestamps: true

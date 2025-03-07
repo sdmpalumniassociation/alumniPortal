@@ -1,13 +1,13 @@
 const isAdmin = (req, res, next) => {
-    // Check if user exists and has role from the decoded token
-    if (!req.user) {
+    // Check if user role exists from the decoded token
+    if (!req.userRole) {
         return res.status(401).json({
             success: false,
             message: 'Authentication required'
         });
     }
 
-    if (req.user.role !== 'admin' && req.user.role !== 'super_admin') {
+    if (req.userRole !== 'admin' && req.userRole !== 'super_admin') {
         return res.status(403).json({
             success: false,
             message: 'Access denied. Admin privileges required.'
