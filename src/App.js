@@ -12,6 +12,7 @@ import Profile from './pages/Profile';
 import Faculties from './pages/Faculties';
 import AlumniList from './pages/AlumniList';
 import AlumniInfo from './pages/AlumniInfo';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/user-homepage" element={<UserHomepage />} />
+            <Route path="/user-homepage" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/faculties" element={<Faculties />} />
             <Route path="/alumni-list" element={<AlumniList />} />

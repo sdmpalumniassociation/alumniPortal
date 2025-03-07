@@ -170,7 +170,7 @@ function AlumniInfo() {
 
                         <div className="back-button-container">
                             <button className="back-button" onClick={handleBack}>
-                                &lt; Back
+                             Back
                             </button>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
     display: flex;
     min-height: 100vh;
     background-color: #fff;
+    overflow: hidden;
 }
 
 .profile-side-navbar {
@@ -23,6 +24,7 @@
     background-color: #FFF5E6;
     min-height: 100vh;
     display: flex;
+    /* justify-content: center; */
     flex-direction: column;
 }
 
@@ -30,6 +32,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    text-align: left;
     padding: 30px;
     width: 100%;
 }
@@ -44,7 +47,7 @@
 }
 
 .profile-card .card-header {
-    background-color: #FFE5B4;
+    background-color: #FFE5CC;
     border-bottom: 1px solid #e9ecef;
     padding: 1.5rem;
     border-radius: 10px 10px 0 0;
