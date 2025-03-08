@@ -54,6 +54,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    address: {
+        type: String,
+        default: ''
+    },
+    linkedIn: {
+        type: String,
+        default: ''
+    },
+    currentPosition: {
+        type: String,
+        default: 'Not specified'
+    },
+    company: {
+        type: String,
+        default: 'Not specified'
+    },
     workingAs: {
         type: String,
         default: 'Not specified'
@@ -62,6 +78,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'Not specified'
     },
+    technicalExpertise: {
+        type: [String],
+        default: []
+    },
+    education: [{
+        degree: String,
+        field: String,
+        institution: String,
+        year: String,
+        score: String
+    }],
     imageUrl: {
         type: String,
         default: 'default-profile.jpg'

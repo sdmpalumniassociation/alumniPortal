@@ -1,694 +1,694 @@
 .profile-page-layout {
-  display: flex;
-  height: 100vh;
-  background-color: #fff;
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+    display: flex;
+    height: 100vh;
+    background-color: #fff;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
 }
 
 .profile-side-navbar {
-  width: 220px;
-  height: 100vh;
-  background-color: #f5f5f5;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-right: 1px solid #ddd;
-  overflow: hidden;
-  flex-shrink: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: #f5f5f5;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-right: 1px solid #ddd;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
 .profile-main-content {
-  flex: 1;
-  padding: 0;
-  max-width: calc(100% - 220px);
-  width: 100%;
-  background-color: #FFF5E6;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
+    flex: 1;
+    padding: 0;
+    max-width: calc(100% - 220px);
+    width: 100%;
+    background-color: #FFF5E6;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .profile-wrapper {
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
 }
 
 .profile-heading {
-  margin-bottom: 25px;
+    margin-bottom: 25px;
 }
 
 .profile-heading h1 {
-  font-size: 32px;
-  color: #333;
-  margin: 0 0 10px 0;
+    font-size: 32px;
+    color: #333;
+    margin: 0 0 10px 0;
 }
 
 .profile-heading p {
-  font-size: 16px;
-  color: #666;
-  margin: 0;
+    font-size: 16px;
+    color: #666;
+    margin: 0;
 }
 
 .profile-container {
-  background-color: #FFE5B4;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  padding: 30px;
-  box-sizing: border-box;
-  margin-bottom: 30px;
+    background-color: #FFE5B4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
 }
 
 .profile-header {
-  display: flex;
-  align-items: center;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
 }
 
 .profile-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 20px;
-  background-color: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .profile-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-name-info {
-  flex: 1;
+    flex: 1;
 }
 
 .profile-name-info h2 {
-  font-size: 24px;
-  color: #333;
-  margin: 0 0 5px 0;
+    font-size: 24px;
+    color: #333;
+    margin: 0 0 5px 0;
 }
 
 .profile-name-info p {
-  font-size: 16px;
-  color: #666;
-  margin: 0;
+    font-size: 16px;
+    color: #666;
+    margin: 0;
 }
 
 .profile-edit-button button {
-  background-color: #FF9933;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+    background-color: #FF9933;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .profile-edit-button button:hover {
-  background-color: #E58826;
+    background-color: #E58826;
 }
 
 /* Edit mode styles */
 .edit-buttons {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .save-button {
-  background-color: #4CAF50 !important;
+    background-color: #4CAF50 !important;
 }
 
 .save-button:hover {
-  background-color: #3e8e41 !important;
+    background-color: #3e8e41 !important;
 }
 
 .cancel-button {
-  background-color: #f44336 !important;
+    background-color: #f44336 !important;
 }
 
 .cancel-button:hover {
-  background-color: #d32f2f !important;
+    background-color: #d32f2f !important;
 }
 
 .edit-input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #333;
-  background-color: white;
-  transition: border-color 0.2s;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: white;
+    transition: border-color 0.2s;
 }
 
 .edit-input:focus {
-  border-color: #FF9933;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.2);
+    border-color: #FF9933;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.2);
 }
 
 /* Phone toggle styles */
 .phone-input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .toggle-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
 }
 
 .toggle-label {
-  position: relative;
-  display: inline-block;
-  width: 45px;
-  height: 24px;
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 24px;
 }
 
 .toggle-input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 24px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
 }
 
 .toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
 }
 
-.toggle-input:checked + .toggle-slider {
-  background-color: #FF9933;
+.toggle-input:checked+.toggle-slider {
+    background-color: #FF9933;
 }
 
-.toggle-input:focus + .toggle-slider {
-  box-shadow: 0 0 1px #FF9933;
+.toggle-input:focus+.toggle-slider {
+    box-shadow: 0 0 1px #FF9933;
 }
 
-.toggle-input:checked + .toggle-slider:before {
-  transform: translateX(21px);
+.toggle-input:checked+.toggle-slider:before {
+    transform: translateX(21px);
 }
 
 .toggle-text {
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
 }
 
 /* WhatsApp number field styles */
 .whatsapp-input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .whatsapp-input-group .edit-input[disabled] {
-  background-color: #f5f5f5;
-  color: #666;
-  cursor: not-allowed;
+    background-color: #f5f5f5;
+    color: #666;
+    cursor: not-allowed;
 }
 
 .checkbox-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
 }
 
 .checkbox-wrapper input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: #FF9933;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #FF9933;
 }
 
 .checkbox-wrapper label {
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
 }
 
 .education-edit {
-  padding: 5px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 6px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
 }
 
 .education-edit-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
 .education-edit-field {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .education-edit-field label {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 5px;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
 }
 
 .education-edit-field input {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .education-edit-field input:focus {
-  border-color: #FF9933;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.2);
+    border-color: #FF9933;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.2);
 }
 
 .edit-skills-section {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .skill-tag.editable {
-  position: relative;
-  padding-right: 25px;
+    position: relative;
+    padding-right: 25px;
 }
 
 .remove-skill {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #FF9933;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #FF9933;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
 }
 
 .add-skill-input {
-  display: flex;
-  gap: 10px;
-  margin-top: 5px;
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
 }
 
 .add-skill-input input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .add-skill-input input:focus {
-  border-color: #FF9933;
-  outline: none;
+    border-color: #FF9933;
+    outline: none;
 }
 
 .add-skill-input button {
-  background-color: #FF9933;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 15px;
-  cursor: pointer;
-  font-size: 14px;
+    background-color: #FF9933;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .add-skill-input button:hover {
-  background-color: #E58826;
+    background-color: #E58826;
 }
 
 .profile-content {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 .profile-section {
-  padding-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .profile-section h3 {
-  font-size: 20px;
-  color: #333;
-  margin: 0 0 15px 0;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    color: #333;
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .subsection-title {
-  font-size: 18px;
-  color: #333;
-  margin: 25px 0 15px 0;
-  font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    margin: 25px 0 15px 0;
+    font-weight: 600;
 }
 
 .profile-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
 .profile-info-item {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .info-label {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
 }
 
 .info-value {
-  font-size: 16px;
-  color: #333;
-  font-weight: 500;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
 }
 
 /* Skills container styles */
 .skills-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .skill-tag {
-  background-color: rgba(255, 153, 51, 0.2);
-  color: #FF9933;
-  border: 1px solid #FF9933;
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  display: inline-block;
-  transition: all 0.2s ease;
+    background-color: rgba(255, 153, 51, 0.2);
+    color: #FF9933;
+    border: 1px solid #FF9933;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    transition: all 0.2s ease;
 }
 
 .skill-tag:hover {
-  background-color: rgba(255, 153, 51, 0.3);
-  transform: translateY(-2px);
+    background-color: rgba(255, 153, 51, 0.3);
+    transform: translateY(-2px);
 }
 
 /* Education Section Styles */
 .education-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .education-item {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .education-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .education-header h4 {
-  font-size: 18px;
-  color: #333;
-  margin: 0;
+    font-size: 18px;
+    color: #333;
+    margin: 0;
 }
 
 .education-year {
-  font-size: 14px;
-  color: #666;
-  font-weight: 500;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
 }
 
 .education-details {
-  margin-top: 5px;
+    margin-top: 5px;
 }
 
 .education-institution {
-  font-size: 16px;
-  color: #333;
-  margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #333;
+    margin: 0 0 5px 0;
 }
 
 .education-score {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
+    font-size: 14px;
+    color: #666;
+    margin: 0;
 }
 
 /* Responsive styles */
 @media (max-width: 992px) {
-  .profile-side-navbar {
-    width: 180px;
-  }
-  
-  .profile-main-content {
-    max-width: calc(100% - 180px);
-  }
-  
-  .profile-container {
-    padding: 25px;
-  }
-  
-  .profile-heading h1 {
-    font-size: 28px;
-  }
-  
-  .profile-name-info h2 {
-    font-size: 22px;
-  }
-  
-  .education-header h4 {
-    font-size: 16px;
-  }
-  
-  .skills-container {
-    gap: 8px;
-  }
-  
-  .skill-tag {
-    font-size: 13px;
-    padding: 4px 10px;
-  }
-  
-  .education-edit-row {
-    flex-direction: column;
-    gap: 10px;
-  }
+    .profile-side-navbar {
+        width: 180px;
+    }
 
-  .whatsapp-input-group,
-  .phone-input-group {
-    width: 100%;
-  }
-  
-  .toggle-text {
-    font-size: 13px;
-  }
+    .profile-main-content {
+        max-width: calc(100% - 180px);
+    }
+
+    .profile-container {
+        padding: 25px;
+    }
+
+    .profile-heading h1 {
+        font-size: 28px;
+    }
+
+    .profile-name-info h2 {
+        font-size: 22px;
+    }
+
+    .education-header h4 {
+        font-size: 16px;
+    }
+
+    .skills-container {
+        gap: 8px;
+    }
+
+    .skill-tag {
+        font-size: 13px;
+        padding: 4px 10px;
+    }
+
+    .education-edit-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .whatsapp-input-group,
+    .phone-input-group {
+        width: 100%;
+    }
+
+    .toggle-text {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 768px) {
-  .profile-page-layout {
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .profile-side-navbar {
-    width: 100%;
-    height: auto;
-    min-height: 60px;
-    max-height: 60px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .profile-main-content {
-    max-width: 100%;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-  }
-  
-  .profile-wrapper {
-    padding: 20px;
-  }
-  
-  .profile-header {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .profile-avatar {
-    margin-right: 0;
-    margin-bottom: 15px;
-  }
-  
-  .profile-name-info {
-    margin-bottom: 15px;
-  }
-  
-  .profile-info-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .education-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  
-  .edit-buttons {
-    margin-top: 15px;
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .edit-buttons button {
-    flex: 1;
-  }
+    .profile-page-layout {
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
 
-  .whatsapp-input-group,
-  .phone-input-group {
-    width: 100%;
-  }
+    .profile-side-navbar {
+        width: 100%;
+        height: auto;
+        min-height: 60px;
+        max-height: 60px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-main-content {
+        max-width: 100%;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+
+    .profile-wrapper {
+        padding: 20px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .profile-name-info {
+        margin-bottom: 15px;
+    }
+
+    .profile-info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .education-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .edit-buttons {
+        margin-top: 15px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .edit-buttons button {
+        flex: 1;
+    }
+
+    .whatsapp-input-group,
+    .phone-input-group {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
-  .profile-wrapper {
-    padding: 15px;
-  }
-  
-  .profile-container {
-    padding: 20px 15px;
-  }
-  
-  .profile-heading h1 {
-    font-size: 24px;
-  }
-  
-  .profile-heading p {
-    font-size: 14px;
-  }
-  
-  .profile-name-info h2 {
-    font-size: 20px;
-  }
-  
-  .profile-name-info p {
-    font-size: 14px;
-  }
-  
-  .profile-section h3 {
-    font-size: 18px;
-  }
-  
-  .subsection-title {
-    font-size: 16px;
-    margin: 20px 0 12px 0;
-  }
-  
-  .info-label {
-    font-size: 13px;
-  }
-  
-  .info-value {
-    font-size: 15px;
-  }
-  
-  .education-header h4 {
-    font-size: 15px;
-  }
-  
-  .education-institution {
-    font-size: 14px;
-  }
-  
-  .education-score {
-    font-size: 13px;
-  }
-  
-  .skill-tag {
-    font-size: 12px;
-    padding: 3px 8px;
-  }
-  
-  .education-edit-row {
-    flex-direction: column;
-  }
+    .profile-wrapper {
+        padding: 15px;
+    }
 
-  .checkbox-wrapper label,
-  .toggle-text {
-    font-size: 13px;
-  }
-  
-  .toggle-label {
-    width: 40px;
-    height: 22px;
-  }
-  
-  .toggle-slider:before {
-    height: 16px;
-    width: 16px;
-    left: 3px;
-    bottom: 3px;
-  }
-  
-  .toggle-input:checked + .toggle-slider:before {
-    transform: translateX(18px);
-  }
+    .profile-container {
+        padding: 20px 15px;
+    }
+
+    .profile-heading h1 {
+        font-size: 24px;
+    }
+
+    .profile-heading p {
+        font-size: 14px;
+    }
+
+    .profile-name-info h2 {
+        font-size: 20px;
+    }
+
+    .profile-name-info p {
+        font-size: 14px;
+    }
+
+    .profile-section h3 {
+        font-size: 18px;
+    }
+
+    .subsection-title {
+        font-size: 16px;
+        margin: 20px 0 12px 0;
+    }
+
+    .info-label {
+        font-size: 13px;
+    }
+
+    .info-value {
+        font-size: 15px;
+    }
+
+    .education-header h4 {
+        font-size: 15px;
+    }
+
+    .education-institution {
+        font-size: 14px;
+    }
+
+    .education-score {
+        font-size: 13px;
+    }
+
+    .skill-tag {
+        font-size: 12px;
+        padding: 3px 8px;
+    }
+
+    .education-edit-row {
+        flex-direction: column;
+    }
+
+    .checkbox-wrapper label,
+    .toggle-text {
+        font-size: 13px;
+    }
+
+    .toggle-label {
+        width: 40px;
+        height: 22px;
+    }
+
+    .toggle-slider:before {
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+    }
+
+    .toggle-input:checked+.toggle-slider:before {
+        transform: translateX(18px);
+    }
 }
