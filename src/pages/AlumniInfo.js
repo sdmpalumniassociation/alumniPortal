@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { API_URL } from '../util/config';
 import '../styles/AlumniInfo.css';
+import { FaLinkedin, FaEnvelope, FaPhone, FaWhatsapp, FaMapMarkerAlt } from 'react-icons/fa';
 
 function AlumniInfo() {
     const navigate = useNavigate();
@@ -38,7 +39,6 @@ function AlumniInfo() {
                 setAlumniData(data.user);
             } else {
                 if (response.status === 401) {
-                    // Handle authentication error
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
                     navigate('/login');
@@ -111,6 +111,7 @@ function AlumniInfo() {
             <div className="alumni-main-content">
                 <div className="alumni-info-wrapper">
                     <div className="alumni-info-container">
+                        {/* Profile Header Section */}
                         <div className="alumni-profile-section">
                             <div className="alumni-photo-container">
                                 <img
@@ -124,53 +125,122 @@ function AlumniInfo() {
                             </div>
 
                             <div className="alumni-details-container">
-                                <div className="detail-item">
-                                    <h3>Name: {alumniData.fullName}</h3>
-                                </div>
-                                <div className="detail-item">
-                                    <h3>Graduated Year: {alumniData.graduatedYear}</h3>
-                                </div>
-                                <div className="detail-item">
-                                    <h3>Branch: {alumniData.branch}</h3>
-                                </div>
-                                <div className="detail-item">
-                                    <h3>Working as: {alumniData.workingAs}</h3>
-                                </div>
-                                <div className="detail-item">
-                                    <h3>Expertise: {alumniData.expertise}</h3>
-                                </div>
+                                <h2 className="alumni-name">{alumniData.fullName}</h2>
+                                <p className="alumni-id">Alumni ID: {alumniData.alumniId}</p>
+                                <p className="alumni-branch">{alumniData.branch} ({alumniData.graduatedYear})</p>
+                                <p className="alumni-position">{alumniData.currentPosition} at {alumniData.company}</p>
                             </div>
                         </div>
 
                         <hr className="section-divider" />
 
+                        {/* Professional Information */}
+                        <div className="professional-section">
+                            <h3>Professional Information</h3>
+                            <div className="info-grid">
+                                <div className="info-item">
+                                    <h4>Current Role</h4>
+                                    <p>{alumniData.workingAs}</p>
+                                </div>
+                                <div className="info-item">
+                                    <h4>Company</h4>
+                                    <p>{alumniData.company}</p>
+                                </div>
+                                <div className="info-item">
+                                    <h4>Expertise</h4>
+                                    <p>{alumniData.expertise}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Technical Expertise */}
+                        {alumniData.technicalExpertise && alumniData.technicalExpertise.length > 0 && (
+                            <>
+                                <hr className="section-divider" />
+                                <div className="technical-section">
+                                    <h3>Technical Skills</h3>
+                                    <div className="skills-container">
+                                        {alumniData.technicalExpertise.map((skill, index) => (
+                                            <span key={index} className="skill-tag">{skill}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        {/* Education Section */}
+                        <hr className="section-divider" />
                         <div className="education-section">
                             <h3>Education</h3>
-                            <div className="education-item">
-                                <h4>Higher Studies: {alumniData.higherStudies}</h4>
+                            <div className="education-list">
+                                {/* Add Diploma from SDMP first */}
+                                <div className="education-item">
+                                    <div className="education-header">
+                                        <h4>Diploma in {alumniData.branch}</h4>
+                                        <span className="education-year">{alumniData.graduatedYear}</span>
+                                    </div>
+                                    <p className="education-institution">SDM Polytechnic, Ujire</p>
+                                </div>
+
+                                {/* Display other education details if available */}
+                                {alumniData.education && alumniData.education.length > 0 &&
+                                    alumniData.education.map((edu, index) => (
+                                        <div key={index} className="education-item">
+                                            <div className="education-header">
+                                                <h4>{edu.degree} {edu.field && `in ${edu.field}`}</h4>
+                                                <span className="education-year">{edu.year}</span>
+                                            </div>
+                                            <p className="education-institution">{edu.institution}</p>
+                                            {edu.score && <p className="education-score">Score: {edu.score}</p>}
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
 
+                        {/* Contact Information */}
                         <hr className="section-divider" />
-
                         <div className="contact-section">
-                            <h3>Contact Information:</h3>
-                            <div className="contact-details">
-                                <div className="contact-item">
-                                    <h4>Email: {alumniData.email}</h4>
-                                </div>
-                                <div className="contact-item">
-                                    <h4>Phone: {alumniData.phone}</h4>
-                                </div>
-                                <div className="contact-item">
-                                    <h4>WhatsApp: {alumniData.whatsappNumber}</h4>
-                                </div>
+                            <h3>Contact Information</h3>
+                            <div className="contact-grid">
+                                {alumniData.email && (
+                                    <div className="contact-item">
+                                        <FaEnvelope className="contact-icon" />
+                                        <span>{alumniData.email}</span>
+                                    </div>
+                                )}
+                                {alumniData.phone !== "Hidden" && (
+                                    <div className="contact-item">
+                                        <FaPhone className="contact-icon" />
+                                        <span>{alumniData.phone}</span>
+                                    </div>
+                                )}
+                                {alumniData.whatsappNumber !== "Hidden" && (
+                                    <div className="contact-item">
+                                        <FaWhatsapp className="contact-icon" />
+                                        <span>{alumniData.whatsappNumber}</span>
+                                    </div>
+                                )}
+                                {alumniData.linkedIn && (
+                                    <div className="contact-item">
+                                        <FaLinkedin className="contact-icon" />
+                                        <a href={alumniData.linkedIn} target="_blank" rel="noopener noreferrer">
+                                            LinkedIn Profile
+                                        </a>
+                                    </div>
+                                )}
+                                {alumniData.address && (
+                                    <div className="contact-item">
+                                        <FaMapMarkerAlt className="contact-icon" />
+                                        <span>{alumniData.address}</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         <div className="back-button-container">
                             <button className="back-button" onClick={handleBack}>
-                                Back
+                                Back to List
                             </button>
                         </div>
                     </div>

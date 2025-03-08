@@ -206,15 +206,20 @@ const userController = {
             const transformedUser = {
                 id: user._id,
                 fullName: user.fullName,
+                alumniId: user.alumniId,
                 graduatedYear: user.graduationYear,
                 branch: user.branch,
-                workingAs: user.workingAs,
-                expertise: user.expertise,
-                education: "Education Details",
-                higherStudies: "Not specified",
+                workingAs: user.workingAs || 'Not specified',
+                currentPosition: user.currentPosition || 'Not specified',
+                company: user.company || 'Not specified',
+                expertise: user.expertise || 'Not specified',
+                technicalExpertise: user.technicalExpertise || [],
+                education: user.education || [],
+                linkedIn: user.linkedIn || '',
+                address: user.address || '',
                 email: user.email,
-                phone: user.hidePhone ? "xxxxxx" : `${user.countryCode} ${user.phone}`,
-                whatsappNumber: user.hidePhone ? "xxxxx" : `${user.countryCode} ${user.whatsappNumber}`,
+                phone: user.hidePhone ? "Hidden" : `${user.countryCode} ${user.phone}`,
+                whatsappNumber: user.hidePhone ? "Hidden" : `${user.countryCode} ${user.whatsappNumber}`,
                 imageUrl: user.imageUrl
             };
 
@@ -256,49 +261,53 @@ const userController = {
 
     updateProfile: async (req, res) => {
         try {
-            const { fullName, email, phone, whatsappNumber, branch, graduationYear, workingAs, expertise } = req.body;
             const userId = req.userId;
 
-            // Check for existing email
-            const existingEmail = await User.findOne({ email, _id: { $ne: userId } });
-            if (existingEmail) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Email is already associated with another account'
-                });
+            // Check for existing email and phone
+            if (req.body.email) {
+                const existingEmail = await User.findOne({ email: req.body.email, _id: { $ne: userId } });
+                if (existingEmail) {
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Email is already associated with another account'
+                    });
+                }
             }
 
-            // Check for existing phone
-            const existingPhone = await User.findOne({ phone, _id: { $ne: userId } });
-            if (existingPhone) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Phone number is already associated with another account'
-                });
+            if (req.body.phone) {
+                const existingPhone = await User.findOne({ phone: req.body.phone, _id: { $ne: userId } });
+                if (existingPhone) {
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Phone number is already associated with another account'
+                    });
+                }
             }
 
-            // Prepare update object
+            // Prepare update data
             const updateData = {
-                fullName,
-                email,
-                phone,
-                whatsappNumber,
-                branch,
-                graduationYear,
-                workingAs,
-                expertise
+                ...req.body,
+                hidePhone: req.body.hidePhone === true || req.body.hidePhone === 'true',
+                education: Array.isArray(req.body.education) ? req.body.education : [],
+                technicalExpertise: Array.isArray(req.body.technicalExpertise) ? req.body.technicalExpertise : []
             };
 
-            // If there's a file uploaded, add the Blob URL
-            if (req.file && req.file.location) {
-                updateData.imageUrl = req.file.location;
-            }
-
+            // Update user
             const updatedUser = await User.findByIdAndUpdate(
                 userId,
                 updateData,
-                { new: true }
+                {
+                    new: true,
+                    runValidators: true
+                }
             ).select('-password');
+
+            if (!updatedUser) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'User not found'
+                });
+            }
 
             res.json({
                 success: true,
@@ -309,7 +318,8 @@ const userController = {
             console.error('Update profile error:', error);
             res.status(500).json({
                 success: false,
-                message: 'Error updating profile'
+                message: 'Error updating profile',
+                error: error.message
             });
         }
     },

@@ -1,332 +1,436 @@
 .alumni-page-layout {
-  display: flex;
-  min-height: 100vh;
-  background-color: #fff;
-  width: 100%;
-  overflow-x: hidden;
+    display: flex;
+    min-height: 100vh;
+    background-color: #fff;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .alumni-side-navbar {
-  width: 250px;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-right: 1px solid #ddd;
+    width: 250px;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-right: 1px solid #ddd;
 }
 
 .alumni-main-content {
-  flex: 1;
-  padding: 0;
-  max-width: calc(100% - 250px);
-  width: 100%;
-  background-color: #FFF5E6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
+    flex: 1;
+    padding: 0;
+    max-width: calc(100% - 250px);
+    width: 100%;
+    background-color: #FFF5E6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
 .loading-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .loading-message {
-  font-size: 20px;
-  font-weight: 500;
-  color: #333;
-  margin-top: 50px;
-  text-align: left;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    margin-top: 50px;
+    text-align: left;
 }
 
 .alumni-info-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 30px 20px;
-  width: 100%;
-  box-sizing: border-box;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .alumni-info-container {
-  background-color: #FFE5B4;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 900px;
-  padding: 25px 20px;
-  position: relative;
-  box-sizing: border-box;
-  text-align: left;
+    background: #FFE5B4;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
 }
 
+/* Profile Section */
 .alumni-profile-section {
-  display: flex;
-  gap: 30px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  text-align: left;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .alumni-photo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 150px;
+    flex-shrink: 0;
 }
 
 .alumni-photo {
-  width: 150px;
-  height: 200px;
-  object-fit: cover;
-  background-color: white;
-  border: 1px solid #ddd;
-}
-
-.photo-label {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #333;
-  text-align: left;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #FFE5B4;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .alumni-details-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  justify-content: flex-start;
-  padding-top: 5px;
-  min-width: 0; /* Prevent flex item from overflowing */
-  text-align: left;
+    flex-grow: 1;
 }
 
-.detail-item {
-  display: flex;
-  flex-direction: column;
-  word-break: break-word;
-  text-align: left;
+.alumni-name {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
 }
 
-.detail-item h3 {
-  font-size: 18px;
-  font-weight: 500;
-  margin: 0;
-  color: #333;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  text-align: left;
+.alumni-id {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
 }
 
+.alumni-branch {
+    color: #444;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.alumni-position {
+    color: #FF6B00;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Section Divider */
 .section-divider {
-  border: none;
-  height: 1px;
-  background-color: #333;
-  margin: 25px 0;
-  width: 100%;
+    border: none;
+    border-top: 1px solid #fff;
+    margin: 2rem 0;
 }
 
+/* Professional Section */
+.professional-section,
+.technical-section,
+.education-section,
+.contact-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.professional-section h3,
+.technical-section h3,
+.education-section h3,
+.contact-section h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-item {
+    background: #FFF5E6;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #FFE5B4;
+}
+
+.info-item h4 {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.info-item p {
+    color: #333;
+    font-size: 1.1rem;
+}
+
+/* Technical Skills */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.skill-tag {
+    background: #FFF5E6;
+    color: #FF6B00;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: 1px solid #FFE5B4;
+}
+
+.skill-tag:hover {
+    background: #FFE5B4;
+}
+
+/* Education Section */
 .education-section {
-  margin-bottom: 30px;
-  padding-left: 15px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
 .education-section h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #333;
-  word-wrap: break-word;
-  text-align: left;
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .education-item {
-  margin-left: 25px;
-  margin-top: 10px;
-  box-sizing: border-box;
-  text-align: left;
+    background: #FFF5E6;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #FFE5B4;
+    transition: all 0.2s;
 }
 
-.education-item h4 {
-  font-size: 17px;
-  font-weight: 500;
-  margin: 0;
-  color: #333;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  text-align: left;
+.education-item:hover {
+    background: #FFE5B4;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.contact-section {
-  background-color: #FFE5B4;
-  margin-bottom: 30px;
-  padding-left: 15px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left;
+.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
-.contact-section h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #333;
-  word-wrap: break-word;
-  text-align: left;
+.education-header h4 {
+    color: #333;
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 600;
+    flex: 1;
 }
 
-.contact-details {
-  margin-left: 25px;
-  box-sizing: border-box;
-  text-align: left;
+.education-year {
+    color: #FF6B00;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.2rem 0.8rem;
+    background: #fff;
+    border-radius: 15px;
+    border: 1px solid #FFE5B4;
+}
+
+.education-institution {
+    color: #495057;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.education-score {
+    color: #666;
+    font-size: 1rem;
+    background: #fff;
+    padding: 0.2rem 0.8rem;
+    border-radius: 15px;
+    display: inline-block;
+    border: 1px solid #FFE5B4;
+}
+
+/* Contact Section */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
 }
 
 .contact-item {
-  margin-top: 10px;
-  text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: #FFF5E6;
+    border-radius: 8px;
+    transition: all 0.2s;
+    border: 1px solid #FFE5B4;
 }
 
-.contact-item h4 {
-  font-size: 17px;
-  font-weight: 500;
-  margin: 0;
-  color: #333;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  text-align: left;
+.contact-item:hover {
+    background: #FFE5B4;
 }
 
+.contact-icon {
+    color: #FF6B00;
+    font-size: 1.2rem;
+}
+
+.contact-item a {
+    color: #FF6B00;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+/* Back Button */
 .back-button-container {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 30px;
-  width: 100%;
+    margin-top: 2rem;
+    text-align: center;
 }
 
 .back-button {
-  background-color: #E5E5E5;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  text-align: left;
+    background: #FF6B00;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .back-button:hover {
-  background-color: #D5D5D5;
+    background: #e65c00;
 }
 
-/* Responsive styles */
+/* Loading and Error States */
+.loading-content,
+.error-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.loading-message,
+.error-message {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive Design */
 @media (max-width: 992px) {
-  .alumni-side-navbar {
-    width: 200px;
-  }
-  
-  .alumni-main-content {
-    max-width: calc(100% - 200px);
-  }
-  
-  .alumni-info-container {
-    padding: 20px 15px;
-  }
-  
-  .detail-item h3,
-  .education-item h4,
-  .contact-item h4 {
-    font-size: 16px;
-  }
+    .alumni-side-navbar {
+        width: 200px;
+    }
+
+    .alumni-main-content {
+        max-width: calc(100% - 200px);
+    }
 }
 
 @media (max-width: 768px) {
-  .alumni-page-layout {
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .alumni-side-navbar {
-    width: 100%;
-    min-height: auto;
-    position: relative;
-  }
-  
-  .alumni-main-content {
-    max-width: 100%;
-    overflow-y: auto;
-  }
-  
-  .alumni-info-wrapper {
-    padding: 15px 10px;
-  }
+    .alumni-page-layout {
+        flex-direction: column;
+    }
 
-  .alumni-info-container {
-    padding: 15px;
-  }
-  
-  .alumni-profile-section {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
+    .alumni-side-navbar {
+        width: 100%;
+        min-height: auto;
+        position: relative;
+    }
 
-  .alumni-photo-container {
-    margin-bottom: 5px;
-    align-items: flex-start;
-  }
+    .alumni-main-content {
+        max-width: 100%;
+    }
 
-  .alumni-details-container {
-    width: 100%;
-  }
+    .alumni-profile-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+    }
 
-  .detail-item {
-    align-items: flex-start;
-  }
-  
-  .education-section,
-  .contact-section {
-    padding-left: 0;
-  }
-  
-  .education-item,
-  .contact-details {
-    margin-left: 15px;
-  }
-  
-  .education-item h4,
-  .contact-item h4 {
-    font-size: 15px;
-  }
+    .alumni-photo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .info-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .education-section {
+        padding: 1.5rem;
+    }
+
+    .education-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+
+    .education-header h4 {
+        font-size: 1.1rem;
+    }
+
+    .education-year {
+        font-size: 0.9rem;
+    }
+
+    .education-institution {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
-  .alumni-info-wrapper {
-    padding: 10px 5px;
-  }
-  
-  .alumni-info-container {
-    padding: 15px 10px;
-  }
-  
-  .detail-item h3 {
-    font-size: 15px;
-  }
-  
-  .education-section h3,
-  .contact-section h3 {
-    font-size: 16px;
-  }
-  
-  .education-item,
-  .contact-details {
-    margin-left: 10px;
-  }
-} 
+    .alumni-info-wrapper {
+        padding: 1rem;
+    }
+
+    .alumni-info-container {
+        padding: 1rem;
+    }
+
+    .alumni-name {
+        font-size: 1.5rem;
+    }
+
+    .contact-item {
+        padding: 0.8rem;
+    }
+
+    .education-section {
+        padding: 1rem;
+    }
+
+    .education-item {
+        padding: 1rem;
+    }
+
+    .education-header h4 {
+        font-size: 1rem;
+    }
+}
