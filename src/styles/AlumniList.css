@@ -1,36 +1,41 @@
 .alumni-page-layout {
     display: flex;
-    min-height: 100vh;
-    background-color: #fff;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
 }
 
 .alumni-side-navbar {
     width: 250px;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #f5f5f5;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 10;
     border-right: 1px solid #ddd;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
 }
 
 .alumni-main-content {
     flex: 1;
-    padding: 0;
     max-width: calc(100% - 250px);
     width: 100%;
-    /* background-color: #FFE5CC; */
+    background-color: #FFE5CC;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: all 0.3s ease;
 }
 
 .search-container {
     padding: 20px;
     width: 100%;
-    /* background-color: #FFE5CC; */
+    background-color: #FFF5E6;
     position: sticky;
     top: 0;
     z-index: 5;
@@ -67,19 +72,24 @@
     width: 100%;
     padding: 0 20px 20px;
     overflow-y: auto;
-    text-align: left;
     flex: 1;
 }
 
 .alumni-card {
-    background-color: #FFE5CC;
+    background-color: #FFE5B4;
     border-radius: 10px;
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.alumni-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .alumni-info {
@@ -91,25 +101,26 @@
 .alumni-image {
     width: 70px;
     height: 70px;
-    border-radius: 0;
+    border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #fff;
 }
 
 .alumni-details {
-    flex: 1;
-    padding-right: 1rem;
+    color: black;
 }
 
 .alumni-details h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
-    color: #333;
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
 }
 
 .alumni-details p {
-    margin: 0.25rem 0;
-    color: #666;
-    font-size: 0.9rem;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.9);
 }
 
 .view-profile-btn {
@@ -125,31 +136,54 @@
 }
 
 .profile-icon {
-    font-size: 24px;
-    color: #333;
+    font-size: 22px;
+    color: #FF9933;
 }
 
 .view-profile-btn:hover {
     background-color: #f0f0f0;
 }
 
-/* Footer styles */
-.footer {
-    background-color: #f5f5f5;
-    padding: 10px;
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    width: 100%;
+}
+
+.empty-results {
     text-align: center;
-    font-size: 14px;
-    border-top: 1px solid #ddd;
+    padding: 40px 20px;
+    color: #666;
 }
 
 /* Responsive styles */
 @media (max-width: 992px) {
     .alumni-side-navbar {
-        width: 200px;
+        width: 220px;
     }
-
+    
     .alumni-main-content {
-        max-width: calc(100% - 200px);
+        max-width: calc(100% - 220px);
+    }
+    
+    .search-box input {
+        padding: 10px 35px 10px 15px;
+        font-size: 15px;
+    }
+    
+    .alumni-image {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .alumni-details h3 {
+        font-size: 16px;
+    }
+    
+    .alumni-details p {
+        font-size: 13px;
     }
 }
 
@@ -157,47 +191,73 @@
     .alumni-page-layout {
         flex-direction: column;
         height: 100vh;
-        overflow: hidden;
     }
-
+    
     .alumni-side-navbar {
         width: 100%;
-        min-height: auto;
+        height: auto;
+        min-height: 60px;
+        max-height: 60px;
         position: relative;
+        z-index: 100;
     }
-
+    
     .alumni-main-content {
         max-width: 100%;
         height: calc(100vh - 60px);
     }
-
+    
     .search-container {
         padding: 15px;
     }
-
+    
     .alumni-cards {
         padding: 0 15px 15px;
-        display: flex;
-        text-align: left;
     }
+}
 
+@media (max-width: 576px) {
     .alumni-card {
         padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .alumni-info {
+        width: 100%;
+    }
+    
+    .view-profile {
+        width: 100%;
         display: flex;
-        text-align: left;
+        justify-content: flex-end;
     }
-
+    
+    .search-box input {
+        padding: 8px 30px 8px 12px;
+        font-size: 14px;
+    }
+    
+    .search-icon {
+        font-size: 14px;
+    }
+    
     .alumni-image {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
     }
-
+    
     .alumni-details h3 {
-        font-size: 16px;
+        font-size: 15px;
     }
-
+    
     .alumni-details p {
-        font-size: 13px;
+        font-size: 12px;
+    }
+    
+    .profile-icon {
+        font-size: 20px;
     }
 }
 

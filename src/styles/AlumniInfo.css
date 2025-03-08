@@ -1,13 +1,13 @@
 .alumni-page-layout {
     display: flex;
-    min-height: 100vh;
     height: 100vh;
     width: 100%;
     overflow: hidden;
+    position: relative;
 }
 
 .alumni-side-navbar {
-    width: 220px;
+    width: 250px;
     height: 100vh;
     background-color: #f5f5f5;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -17,11 +17,12 @@
     border-right: 1px solid #ddd;
     overflow: hidden;
     flex-shrink: 0;
+    transition: all 0.3s ease;
 }
 
 .alumni-main-content {
     flex: 1;
-    max-width: calc(100% - 220px);
+    max-width: calc(100% - 250px);
     width: 100%;
     background-color: #FFF5E6;
     height: 100vh;
@@ -29,6 +30,7 @@
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: auto;
+    transition: all 0.3s ease;
 }
 
 .loading-content {
@@ -62,6 +64,8 @@
     max-width: 900px;
     padding: 2rem;
     box-sizing: border-box;
+    transition: all 0.3s ease;
+    overflow-y: hidden;
 }
 
 .alumni-profile-section {
@@ -158,6 +162,12 @@
     border-radius: 8px;
     border: 1px solid #FFE5B4;
     word-wrap: break-word;
+    transition: transform 0.2s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .info-item h4 {
@@ -194,6 +204,7 @@
 
 .skill-tag:hover {
     background: #FFE5B4;
+    transform: translateY(-2px);
 }
 
 /* Education Section */
@@ -235,6 +246,7 @@
     align-items: flex-start;
     margin-bottom: 0.8rem;
     flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .education-header h4 {
@@ -255,7 +267,6 @@
     border-radius: 20px;
     font-size: 0.9rem;
     white-space: nowrap;
-    margin-left: 1rem;
 }
 
 .education-institution {
@@ -294,16 +305,19 @@
 
 .contact-item:hover {
     background: #FFE5B4;
+    transform: translateY(-3px);
 }
 
 .contact-icon {
     color: #FF6B00;
     font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
 .contact-item a {
     color: #333;
     text-decoration: none;
+    word-break: break-word;
 }
 
 .contact-item a:hover {
@@ -330,6 +344,7 @@
 
 .back-button:hover {
     background: #E55000;
+    transform: translateY(-2px);
 }
 
 .loading-content,
@@ -351,10 +366,23 @@
 /* Responsive Styles */
 @media (max-width: 992px) {
     .alumni-side-navbar {
-        width: 180px;
+        width: 220px;
     }
+    
     .alumni-main-content {
-        max-width: calc(100% - 180px);
+        max-width: calc(100% - 220px);
+    }
+    
+    .alumni-info-container {
+        padding: 1.5rem;
+    }
+    
+    .alumni-name {
+        font-size: 1.6rem;
+    }
+    
+    .info-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
 
@@ -363,6 +391,7 @@
         flex-direction: column;
         height: 100vh;
     }
+    
     .alumni-side-navbar {
         width: 100%;
         height: auto;
@@ -373,61 +402,98 @@
         align-items: center;
         justify-content: center;
     }
+    
     .alumni-main-content {
         max-width: 100%;
         height: calc(100vh - 60px);
     }
+    
+    .alumni-info-wrapper {
+        padding: 1.5rem 1rem;
+    }
+    
+    .alumni-info-container {
+        padding: 1.5rem;
+    }
+    
     .alumni-profile-section {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        gap: 1.5rem;
     }
-    .alumni-photo {
-        width: 130px;
-        height: 150px;
+    
+    .alumni-details-container {
+        text-align: center;
     }
+    
     .info-grid,
     .contact-grid {
         grid-template-columns: 1fr;
     }
+    
     .education-section {
         padding: 0;
     }
+    
     .education-header {
         flex-direction: column;
         align-items: flex-start;
     }
-    .education-header h4 {
-        margin-bottom: 0.5rem;
-    }
+    
     .education-year {
         margin-left: 0;
     }
+    
     .education-institution {
         font-size: 1rem;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .alumni-info-wrapper {
-        padding: 1rem;
+        padding: 1rem 0.8rem;
     }
+    
     .alumni-info-container {
-        padding: 1.5rem;
+        padding: 1.2rem;
     }
+    
+    .alumni-photo {
+        width: 130px;
+        height: 160px;
+    }
+    
     .alumni-name {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
+    
+    .alumni-branch {
+        font-size: 1.1rem;
+    }
+    
+    .professional-section h3,
+    .contact-section h3,
+    .education-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .info-item,
+    .education-item,
     .contact-item {
         padding: 1rem;
     }
-    .education-section {
-        margin-bottom: 1.5rem;
-    }
-    .education-item {
-        padding: 1.2rem;
-    }
+    
     .education-header h4 {
         font-size: 1.1rem;
+    }
+    
+    .education-institution,
+    .info-item p {
+        font-size: 0.95rem;
+    }
+    
+    .back-button {
+        padding: 0.7rem 1.5rem;
     }
 }
