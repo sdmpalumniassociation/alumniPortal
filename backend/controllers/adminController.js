@@ -110,9 +110,40 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const getUserStats = async (req, res) => {
+    try {
+        // Get total number of users
+        const totalUsers = await User.countDocuments({ role: 'alumni' });
+
+        // Get users registered in the last 30 days
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const newUsers = await User.countDocuments({
+            role: 'alumni',
+            createdAt: { $gte: thirtyDaysAgo }
+        });
+
+        res.json({
+            success: true,
+            stats: {
+                totalUsers,
+                newUsers,
+                percentageGrowth: totalUsers > 0 ? ((newUsers / totalUsers) * 100).toFixed(1) : 0
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching user stats:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching user statistics'
+        });
+    }
+};
+
 module.exports = {
     loginAdmin,
     getAdminProfile,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    getUserStats
 }; 
