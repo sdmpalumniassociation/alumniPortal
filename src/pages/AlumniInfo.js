@@ -140,16 +140,13 @@ function AlumniInfo() {
                             <div className="info-grid">
                                 <div className="info-item">
                                     <h4>Current Role</h4>
-                                    <p>{alumniData.workingAs}</p>
+                                    <p>{alumniData.currentPosition}</p>
                                 </div>
                                 <div className="info-item">
                                     <h4>Company</h4>
                                     <p>{alumniData.company}</p>
                                 </div>
-                                <div className="info-item">
-                                    <h4>Expertise</h4>
-                                    <p>{alumniData.expertise}</p>
-                                </div>
+
                             </div>
                         </div>
 
@@ -183,7 +180,7 @@ function AlumniInfo() {
                                 </div>
 
                                 {/* Display other education details if available */}
-                                {Array.isArray(alumniData.education) 
+                                {Array.isArray(alumniData.education)
                                     ? alumniData.education.map((edu, index) => (
                                         <div key={index} className="education-item">
                                             <div className="education-header">

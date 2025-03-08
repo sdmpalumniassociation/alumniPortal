@@ -27,5 +27,6 @@ router.put('/profile',
 router.post('/toggle-phone', authenticateUser, userController.togglePhoneVisibility);
 router.get('/all', authenticateUser, userController.getAllUsers);
 router.get('/:id', authenticateUser, userController.getUserById);
+router.put('/update-password', authenticateUser, userController.updatePassword);
 
 module.exports = router; 

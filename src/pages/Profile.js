@@ -13,6 +13,22 @@ function Profile() {
     const [success, setSuccess] = useState(null);
     const [whatsAppSameAsPhone, setWhatsAppSameAsPhone] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordUpdateError, setPasswordUpdateError] = useState('');
+    const [passwordUpdateSuccess, setPasswordUpdateSuccess] = useState('');
+    const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+
+    const branches = [
+        'Civil Engineering',
+        'Computer Science & Engineering',
+        'Electronics & Communication Engineering',
+        'Mechanical Engineering',
+        'Information Science Engineering'
+    ];
+
+    const years = Array.from({ length: 15 }, (_, i) => new Date().getFullYear() - i);
 
     // Fetch user profile data
     useEffect(() => {
@@ -143,47 +159,31 @@ function Profile() {
         try {
             const token = localStorage.getItem('token');
 
-            // Create a regular object instead of FormData for better handling of arrays
+            // Create FormData to handle both file and JSON data
+            const formData = new FormData();
+
+            // Add all profile data
             const updateData = {
                 ...tempUserData,
                 technicalExpertise: tempUserData.technicalExpertise || [],
                 education: tempUserData.education || []
             };
 
-            // Create FormData only for the file
-            const formData = new FormData();
+            // Add the JSON data as a string
+            formData.append('userData', JSON.stringify(updateData));
+
+            // Add the file if selected
             if (selectedFile) {
                 formData.append('profileImage', selectedFile);
             }
 
-            // First, upload the file if there is one
-            let imageUrl = null;
-            if (selectedFile) {
-                const fileResponse = await fetch(`${API_URL}/users/profile/upload`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: formData
-                });
-
-                if (fileResponse.ok) {
-                    const fileData = await fileResponse.json();
-                    imageUrl = fileData.imageUrl;
-                }
-            }
-
-            // Then update the profile with all data
+            // Send the update request with FormData
             const response = await fetch(`${API_URL}/users/profile`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    ...updateData,
-                    ...(imageUrl && { imageUrl })
-                })
+                body: formData
             });
 
             const data = await response.json();
@@ -199,6 +199,57 @@ function Profile() {
         } catch (error) {
             console.error('Error updating profile:', error);
             setError('Network error occurred');
+        }
+    };
+
+    const handlePasswordUpdate = async (e) => {
+        e.preventDefault();
+        setPasswordUpdateError('');
+        setPasswordUpdateSuccess('');
+
+        // Validate passwords
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            setPasswordUpdateError('All password fields are required');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            setPasswordUpdateError('New passwords do not match');
+            return;
+        }
+
+        if (newPassword.length < 8) {
+            setPasswordUpdateError('New password must be at least 8 characters long');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(`${API_URL}/users/update-password`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    currentPassword,
+                    newPassword
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setPasswordUpdateSuccess('Password updated successfully');
+                setCurrentPassword('');
+                setNewPassword('');
+                setConfirmPassword('');
+            } else {
+                setPasswordUpdateError(data.message || 'Failed to update password');
+            }
+        } catch (error) {
+            setPasswordUpdateError('Network error. Please try again.');
         }
     };
 
@@ -291,12 +342,16 @@ function Profile() {
                                         {!editMode ? (
                                             <span className="info-value">{userData.fullName}</span>
                                         ) : (
-                                            <input
-                                                type="text"
-                                                className="edit-input"
-                                                value={tempUserData.fullName}
-                                                onChange={(e) => handleInputChange(e, 'fullName')}
-                                            />
+                                            <div className="form-group mb-4">
+
+                                                <input
+                                                    type="text"
+                                                    value={tempUserData.fullName}
+                                                    onChange={(e) => handleInputChange(e, 'fullName')}
+                                                    className="edit-input"
+                                                    placeholder="Enter your full name"
+                                                />
+                                            </div>
                                         )}
                                     </div>
                                     <div className="profile-info-item">
@@ -308,12 +363,20 @@ function Profile() {
                                         {!editMode ? (
                                             <span className="info-value">{userData.graduationYear}</span>
                                         ) : (
-                                            <input
-                                                type="text"
-                                                className="edit-input"
-                                                value={tempUserData.graduationYear}
-                                                onChange={(e) => handleInputChange(e, 'graduationYear')}
-                                            />
+                                            <div className="form-group mb-4">
+
+                                                <select
+                                                    value={tempUserData.graduationYear}
+                                                    onChange={(e) => handleInputChange(e, 'graduationYear')}
+                                                    className="edit-input"
+                                                >
+                                                    {years.map(year => (
+                                                        <option key={year} value={year}>
+                                                            {year}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
                                         )}
                                     </div>
                                     <div className="profile-info-item">
@@ -321,12 +384,20 @@ function Profile() {
                                         {!editMode ? (
                                             <span className="info-value">{userData.branch}</span>
                                         ) : (
-                                            <input
-                                                type="text"
-                                                className="edit-input"
-                                                value={tempUserData.branch}
-                                                onChange={(e) => handleInputChange(e, 'branch')}
-                                            />
+                                            <div className="form-group mb-4">
+
+                                                <select
+                                                    value={tempUserData.branch}
+                                                    onChange={(e) => handleInputChange(e, 'branch')}
+                                                    className="edit-input"
+                                                >
+                                                    {branches.map(branch => (
+                                                        <option key={branch} value={branch}>
+                                                            {branch}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
                                         )}
                                     </div>
                                 </div>
@@ -346,11 +417,27 @@ function Profile() {
                                                     </div>
                                                     <div className="education-details">
                                                         <p className="education-institution">{edu.institution}</p>
-                                                        <p className="education-score">Score: {edu.score}</p>
                                                     </div>
                                                 </>
                                             ) : (
                                                 <div className="education-edit">
+                                                    <div className="education-edit-header">
+                                                        <h4>Education Details</h4>
+                                                        <button
+                                                            type="button"
+                                                            className="remove-education-button"
+                                                            onClick={() => {
+                                                                const updatedEducation = [...tempUserData.education];
+                                                                updatedEducation.splice(index, 1);
+                                                                setTempUserData({
+                                                                    ...tempUserData,
+                                                                    education: updatedEducation
+                                                                });
+                                                            }}
+                                                        >
+                                                            <i className="fas fa-trash"></i> Remove
+                                                        </button>
+                                                    </div>
                                                     <div className="education-edit-row">
                                                         <div className="education-edit-field">
                                                             <label>Degree</label>
@@ -358,6 +445,7 @@ function Profile() {
                                                                 type="text"
                                                                 value={edu.degree || ''}
                                                                 onChange={(e) => handleEducationChange(index, 'degree', e.target.value)}
+                                                                placeholder="Enter degree"
                                                             />
                                                         </div>
                                                         <div className="education-edit-field">
@@ -366,6 +454,7 @@ function Profile() {
                                                                 type="text"
                                                                 value={edu.field || ''}
                                                                 onChange={(e) => handleEducationChange(index, 'field', e.target.value)}
+                                                                placeholder="Enter field of study"
                                                             />
                                                         </div>
                                                     </div>
@@ -376,6 +465,7 @@ function Profile() {
                                                                 type="text"
                                                                 value={edu.institution || ''}
                                                                 onChange={(e) => handleEducationChange(index, 'institution', e.target.value)}
+                                                                placeholder="Enter institution name"
                                                             />
                                                         </div>
                                                         <div className="education-edit-field">
@@ -384,16 +474,7 @@ function Profile() {
                                                                 type="text"
                                                                 value={edu.year || ''}
                                                                 onChange={(e) => handleEducationChange(index, 'year', e.target.value)}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="education-edit-row">
-                                                        <div className="education-edit-field">
-                                                            <label>Score</label>
-                                                            <input
-                                                                type="text"
-                                                                value={edu.score || ''}
-                                                                onChange={(e) => handleEducationChange(index, 'score', e.target.value)}
+                                                                placeholder="Enter year"
                                                             />
                                                         </div>
                                                     </div>
@@ -403,13 +484,14 @@ function Profile() {
                                     ))}
                                     {editMode && (
                                         <button
+                                            type="button"
                                             className="add-education-button"
                                             onClick={() => setTempUserData({
                                                 ...tempUserData,
                                                 education: [...(tempUserData.education || []), {}]
                                             })}
                                         >
-                                            Add Education
+                                            <i className="fas fa-plus"></i> Add New Education
                                         </button>
                                     )}
                                 </div>
@@ -424,12 +506,16 @@ function Profile() {
                                         {!editMode ? (
                                             <span className="info-value">{userData.email}</span>
                                         ) : (
-                                            <input
-                                                type="email"
-                                                className="edit-input"
-                                                value={tempUserData.email}
-                                                onChange={(e) => handleInputChange(e, 'email')}
-                                            />
+                                            <div className="form-group mb-4">
+
+                                                <input
+                                                    type="email"
+                                                    value={tempUserData.email}
+                                                    onChange={(e) => handleInputChange(e, 'email')}
+                                                    className="edit-input"
+                                                    placeholder="Enter your email"
+                                                />
+                                            </div>
                                         )}
                                     </div>
                                     <div className="profile-info-item">
@@ -550,32 +636,6 @@ function Profile() {
                                             />
                                         )}
                                     </div>
-                                    <div className="profile-info-item">
-                                        <span className="info-label">Working As</span>
-                                        {!editMode ? (
-                                            <span className="info-value">{userData.workingAs}</span>
-                                        ) : (
-                                            <input
-                                                type="text"
-                                                className="edit-input"
-                                                value={tempUserData.workingAs}
-                                                onChange={(e) => handleInputChange(e, 'workingAs')}
-                                            />
-                                        )}
-                                    </div>
-                                    <div className="profile-info-item">
-                                        <span className="info-label">Expertise</span>
-                                        {!editMode ? (
-                                            <span className="info-value">{userData.expertise}</span>
-                                        ) : (
-                                            <input
-                                                type="text"
-                                                className="edit-input"
-                                                value={tempUserData.expertise}
-                                                onChange={(e) => handleInputChange(e, 'expertise')}
-                                            />
-                                        )}
-                                    </div>
                                 </div>
 
                                 <h4 className="subsection-title">Technical Expertise</h4>
@@ -612,6 +672,56 @@ function Profile() {
                                         </div>
                                     </div>
                                 )}
+                            </div>
+
+                            {/* Password Update Section */}
+                            <div className="profile-section">
+                                <h3>Update Password</h3>
+                                <form className="password-update-form" onSubmit={handlePasswordUpdate}>
+                                    {passwordUpdateError && (
+                                        <div className="error-message" style={{ marginBottom: '1rem' }}>
+                                            {passwordUpdateError}
+                                        </div>
+                                    )}
+                                    {passwordUpdateSuccess && (
+                                        <div className="success-message" style={{ marginBottom: '1rem' }}>
+                                            {passwordUpdateSuccess}
+                                        </div>
+                                    )}
+                                    <div className="form-group">
+                                        <label>Current Password</label>
+                                        <input
+                                            type="password"
+                                            className="edit-input"
+                                            value={currentPassword}
+                                            onChange={(e) => setCurrentPassword(e.target.value)}
+                                            placeholder="Enter current password"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>New Password</label>
+                                        <input
+                                            type="password"
+                                            className="edit-input"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            placeholder="Enter new password"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Confirm New Password</label>
+                                        <input
+                                            type="password"
+                                            className="edit-input"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            placeholder="Confirm new password"
+                                        />
+                                    </div>
+                                    <button type="submit" className="update-password-button">
+                                        Update Password
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
