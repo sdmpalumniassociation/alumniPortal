@@ -206,15 +206,20 @@ const userController = {
             const transformedUser = {
                 id: user._id,
                 fullName: user.fullName,
+                alumniId: user.alumniId,
                 graduatedYear: user.graduationYear,
                 branch: user.branch,
-                workingAs: user.workingAs,
-                expertise: user.expertise,
-                education: "Education Details",
-                higherStudies: "Not specified",
+                workingAs: user.workingAs || 'Not specified',
+                currentPosition: user.currentPosition || 'Not specified',
+                company: user.company || 'Not specified',
+                expertise: user.expertise || 'Not specified',
+                technicalExpertise: user.technicalExpertise || [],
+                education: user.education || [],
+                linkedIn: user.linkedIn || '',
+                address: user.address || '',
                 email: user.email,
-                phone: user.hidePhone ? "xxxxxx" : `${user.countryCode} ${user.phone}`,
-                whatsappNumber: user.hidePhone ? "xxxxx" : `${user.countryCode} ${user.whatsappNumber}`,
+                phone: user.hidePhone ? "Hidden" : `${user.countryCode} ${user.phone}`,
+                whatsappNumber: user.hidePhone ? "Hidden" : `${user.countryCode} ${user.whatsappNumber}`,
                 imageUrl: user.imageUrl
             };
 
