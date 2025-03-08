@@ -2,6 +2,18 @@ const User = require('../models/User');
 const { generateToken } = require('../utils/jwt');
 const { sendEmail } = require('../services/emailService');
 
+// Add these validation functions at the top of the file
+const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
+
+const validatePhone = (phone) => {
+    // Allow only numbers, minimum 10 digits
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phone);
+};
+
 // Add this new function to generate the next Alumni ID
 const getNextAlumniId = async () => {
     const lastUser = await User.findOne({}, { alumniId: 1 })
@@ -34,50 +46,77 @@ const userController = {
         try {
             const {
                 fullName,
-                alumniId,
                 email,
-                countryCode,
-                phone,
-                whatsappNumber,
                 password,
                 graduationYear,
-                branch
+                branch,
+                countryCode,
+                phone,
+                whatsappNumber
             } = req.body;
 
-            // Check if user already exists with email or phone
-            const existingUser = await User.findOne({
-                $or: [
-                    { email },
-                    { phone },
-                    { alumniId }
-                ]
-            });
-
-            if (existingUser) {
+            // Email validation
+            if (!validateEmail(email)) {
                 return res.status(400).json({
                     success: false,
-                    message: existingUser.email === email
-                        ? 'Email already registered'
-                        : existingUser.alumniId === alumniId
-                            ? 'Alumni ID already exists'
-                            : 'Phone number already registered'
+                    message: 'Please enter a valid email address'
                 });
             }
 
-            // Create new user
+            // Check if email already exists
+            const existingEmail = await User.findOne({ email });
+            if (existingEmail) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Email is already registered'
+                });
+            }
+
+            // Phone validation
+            if (!validatePhone(phone)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Phone number must be 10 digits'
+                });
+            }
+
+            // Check if phone already exists
+            const existingPhone = await User.findOne({ phone });
+            if (existingPhone) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Phone number is already registered'
+                });
+            }
+
+            // WhatsApp number validation (if different from phone)
+            if (whatsappNumber !== phone && !validatePhone(whatsappNumber)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'WhatsApp number must be 10 digits'
+                });
+            }
+
+            // Get next alumni ID
+            const alumniId = await getNextAlumniId();
+
+            // Create user
             const user = new User({
                 fullName,
-                alumniId,
                 email,
-                countryCode,
-                phone,
-                whatsappNumber,
                 password,
                 graduationYear,
-                branch
+                branch,
+                alumniId,
+                countryCode,
+                phone,
+                whatsappNumber
             });
 
             await user.save();
+
+            // Generate token
+            const token = generateToken(user._id, user.role);
 
             // Send welcome email
             try {
@@ -89,25 +128,27 @@ const userController = {
                     graduationYear
                 });
             } catch (emailError) {
-                console.error('Failed to send welcome email:', emailError);
+                console.error('Error sending welcome email:', emailError);
+                // Continue with registration even if email fails
             }
-
-            // Remove password from response
-            const userResponse = user.toObject();
-            delete userResponse.password;
 
             res.status(201).json({
                 success: true,
                 message: 'Registration successful',
-                user: userResponse
+                token,
+                user: {
+                    id: user._id,
+                    fullName: user.fullName,
+                    email: user.email,
+                    role: user.role,
+                    alumniId: user.alumniId
+                }
             });
-
         } catch (error) {
             console.error('Registration error:', error);
             res.status(500).json({
                 success: false,
-                message: 'Registration failed',
-                error: error.message
+                message: 'Error in registration'
             });
         }
     },
