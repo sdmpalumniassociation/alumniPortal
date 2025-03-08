@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    username: {
+    alumniId: {
         type: String,
         required: true,
         unique: true,
@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
+    role: {
+        type: String,
+        default: 'alumni',
+        enum: ['alumni', 'admin'], // restricting possible roles
+        required: true
+    },
     countryCode: {
         type: String,
         required: true
@@ -28,21 +34,66 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    hidePhone: {
+        type: Boolean,
+        default: false
+    },
     whatsappNumber: {
         type: String,
         required: true
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minlength: [8, 'Password must be at least 8 characters long']
     },
     graduationYear: {
         type: String,
-        required: true
+        required: true,
+        enum: Array.from({ length: 15 }, (_, i) => (new Date().getFullYear() - i).toString())
     },
     branch: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Civil Engineering', 'Computer Science & Engineering', 'Electronics & Communication Engineering', 'Mechanical Engineering', 'Information Science Engineering']
+    },
+    address: {
+        type: String,
+        default: ''
+    },
+    linkedIn: {
+        type: String,
+        default: ''
+    },
+    currentPosition: {
+        type: String,
+        default: 'Not specified'
+    },
+    company: {
+        type: String,
+        default: 'Not specified'
+    },
+    technicalExpertise: {
+        type: [String],
+        default: []
+    },
+    education: [{
+        degree: String,
+        field: String,
+        institution: String,
+        year: String
+    }],
+    imageUrl: {
+        type: String,
+        default: 'default-profile.jpg'
+    },
+    resetPasswordToken: {
+        type: String,
+        default: null
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null
     }
 }, {
     timestamps: true

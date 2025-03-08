@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import logo from '../assets/images/sdmp-logo.png';
 import { API_URL } from '../util/config';
@@ -6,7 +6,7 @@ import { API_URL } from '../util/config';
 const Register = () => {
     const [formData, setFormData] = useState({
         fullName: '',
-        username: '',
+        alumniId: '',
         email: '',
         countryCode: '+91',
         phone: '',
@@ -18,9 +18,40 @@ const Register = () => {
         branch: ''
     });
 
-    const [usernameSuggestions, setUsernameSuggestions] = useState([]);
+    const [errors, setErrors] = useState({
+        password: '',
+        confirmPassword: ''
+    });
+    const [loading, setLoading] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
     const navigate = useNavigate();
+
+    // Fetch the next available alumni ID when component mounts
+    useEffect(() => {
+        const fetchNextAlumniId = async () => {
+            try {
+                const response = await fetch(`${API_URL}/users/next-alumni-id`);
+                const data = await response.json();
+                if (response.ok) {
+                    setFormData(prev => ({
+                        ...prev,
+                        alumniId: data.nextAlumniId
+                    }));
+                }
+            } catch (error) {
+                console.error('Error fetching next alumni ID:', error);
+            }
+        };
+
+        fetchNextAlumniId();
+    }, []);
+
+    const validatePassword = (password) => {
+        if (password.length < 8) {
+            return 'Password must be at least 8 characters long';
+        }
+        return '';
+    };
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -40,30 +71,42 @@ const Register = () => {
                     : {})
             }));
 
-            if (name === 'fullName') {
-                generateUsernameSuggestions(value);
+            // Password validation
+            if (name === 'password') {
+                const passwordError = validatePassword(value);
+                setErrors(prev => ({
+                    ...prev,
+                    password: passwordError,
+                    confirmPassword: value !== formData.confirmPassword ? 'Passwords do not match' : ''
+                }));
+            }
+
+            // Confirm password validation
+            if (name === 'confirmPassword') {
+                setErrors(prev => ({
+                    ...prev,
+                    confirmPassword: value !== formData.password ? 'Passwords do not match' : ''
+                }));
             }
         }
     };
 
-    const generateUsernameSuggestions = (fullName) => {
-        const baseName = fullName.toLowerCase().replace(/\s+/g, '');
-        const suggestions = [
-            baseName,
-            `${baseName}${Math.floor(Math.random() * 100)}`,
-            `${baseName}_${Math.floor(Math.random() * 100)}`,
-            `${baseName}.${Math.floor(Math.random() * 100)}`,
-            `${baseName}${new Date().getFullYear()}`
-        ];
-        setUsernameSuggestions(suggestions);
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+
+        // Validate password
+        const passwordError = validatePassword(formData.password);
+        if (passwordError) {
+            setErrors(prev => ({ ...prev, password: passwordError }));
+            setLoading(false);
+            return;
+        }
 
         // Check if passwords match
         if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
+            setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+            setLoading(false);
             return;
         }
 
@@ -81,12 +124,13 @@ const Register = () => {
             if (response.ok) {
                 setShowDialog(true);
             } else {
-                // Show the error message from the server
                 alert(data.message || 'Registration failed');
             }
         } catch (error) {
             console.error('Error:', error);
             alert('Network error. Please check your connection and try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -97,9 +141,10 @@ const Register = () => {
 
     const branches = [
         'Civil Engineering',
-        'Computer Science',
-        'Electronics & Communication',
-        'Mechanical Engineering'
+        'Computer Science & Engineering',
+        'Electronics & Communication Engineering',
+        'Mechanical Engineering',
+        'Information Science Engineering'
     ];
 
     const years = Array.from({ length: 15 }, (_, i) => new Date().getFullYear() - i);
@@ -137,28 +182,18 @@ const Register = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Username</label>
+                            <label>Alumni ID</label>
                             <input
                                 type="text"
-                                name="username"
-                                value={formData.username}
-                                onChange={handleChange}
+                                name="alumniId"
+                                value={formData.alumniId}
                                 className="login-input"
-                                placeholder="Choose a username"
-                                required
+                                readOnly
+                                disabled
                             />
-                            <div className="username-suggestions">
-                                {usernameSuggestions.map((suggestion, index) => (
-                                    <button
-                                        type="button"
-                                        key={index}
-                                        onClick={() => setFormData({ ...formData, username: suggestion })}
-                                        className="suggestion-button"
-                                    >
-                                        {suggestion}
-                                    </button>
-                                ))}
-                            </div>
+                            <small className="form-text text-muted">
+                                Your Alumni ID will be automatically assigned
+                            </small>
                         </div>
 
                         <div className="form-group">
@@ -279,10 +314,11 @@ const Register = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="login-input"
-                                placeholder="Create a password"
+                                className={`login-input ${errors.password ? 'error-input' : ''}`}
+                                placeholder="Create a password (minimum 8 characters)"
                                 required
                             />
+                            {errors.password && <span className="error-message">{errors.password}</span>}
                         </div>
 
                         <div className="form-group">
@@ -292,14 +328,15 @@ const Register = () => {
                                 name="confirmPassword"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
-                                className="login-input"
+                                className={`login-input ${errors.confirmPassword ? 'error-input' : ''}`}
                                 placeholder="Confirm your password"
                                 required
                             />
+                            {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
                         </div>
 
-                        <button type="submit" className="login-button">
-                            Register
+                        <button type="submit" className="login-button" disabled={loading}>
+                            {loading ? 'Registering...' : 'Register'}
                         </button>
 
                         <div className="back-to-login">
@@ -314,7 +351,8 @@ const Register = () => {
             {showDialog && (
                 <div className="dialog">
                     <div className="dialog-content">
-                        <p>Registration successful!</p>
+                        <p>Registration successful! Your Alumni ID is {formData.alumniId}</p>
+                        <p>Please save this ID for future reference.</p>
                         <button onClick={handleDialogClose} className="dialog-button">Okay</button>
                     </div>
                 </div>

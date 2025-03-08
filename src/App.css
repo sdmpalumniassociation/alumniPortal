@@ -1,8 +1,64 @@
+/* Base mobile-first approach */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
 .App {
   text-align: center;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+}
+
+.main-content {
+  width: 100%;
+  overflow-x: hidden;
+  min-height: calc(100vh - 60px);
+}
+
+/* Responsive containers */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
 }
 
 .header {
@@ -88,14 +144,6 @@
   font-weight: 500;
   color: #333;
   margin: 0;
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #ffffff;
 }
 
 .coming-soon {
@@ -819,28 +867,7 @@ select.login-input {
 
 /* Navbar and Sidebar Styles */
 .navbar-container {
-  display: flex;
-  flex-direction: column;
-  /* min-height: 100vh; */
-}
-
-
-.navbar-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #333;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-  background-color: #FF6B00;
-  color: white;
+  width: 100%;
 }
 
 /* Sidebar Styles */
@@ -848,23 +875,27 @@ select.login-input {
   width: 250px;
   background-color: #D9D9D9;
   min-height: 100vh;
-  padding: 2rem 0;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
 }
 
 .sidebar-item {
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   text-decoration: none;
   color: #333;
   transition: all 0.3s ease;
-  gap: 1rem;
+  gap: 0.8rem;
+  font-size: 0.95rem;
 }
 
-.sidebar-item i {
-  width: 20px;
+.sidebar-item svg {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
 }
 
 .sidebar-item:hover {
@@ -878,8 +909,12 @@ select.login-input {
 }
 
 .logout {
-  margin-top: auto;
   color: #dc3545;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 
 .logout:hover {
@@ -887,36 +922,57 @@ select.login-input {
   color: white;
 }
 
-/* Responsive Design */
+/* Mobile Navbar Styles */
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  padding: 5px;
+}
+
+/* Responsive Sidebar */
 @media (max-width: 768px) {
-  .navbar-header {
-    flex-direction: column;
-    padding: 1rem;
+  .mobile-nav-toggle {
+    display: block;
   }
-
-  .navbar-logo-section {
-    margin-bottom: 1rem;
+  
+  .sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    height: 100%;
+    z-index: 999;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
   }
-
-  .navbar-title h1 {
-    font-size: 1rem;
+  
+  .sidebar.open {
+    left: 0;
   }
-
-  .navbar-title h2 {
+  
+  .sidebar-item span {
     font-size: 0.9rem;
   }
-
-  .sidebar {
-    width: 60px;
-  }
-
-  .sidebar-item span {
+  
+  .sidebar-overlay {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
   }
-
-  .sidebar-item {
-    padding: 1rem;
-    justify-content: center;
+  
+  .sidebar-overlay.active {
+    display: block;
   }
 }
 
@@ -948,7 +1004,9 @@ select.login-input {
 .faculties-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .faculties-intro {
@@ -1259,4 +1317,22 @@ select.login-input {
   .principal-card .faculty-contact p {
     font-size: 1rem;
   }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  width: 100%;
+  padding: 30px;
+  font-size: 18px;
+  color: #666;
+}
+
+.loading-container p {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }

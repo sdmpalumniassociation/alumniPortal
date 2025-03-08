@@ -1,1 +1,1 @@
-export const API_URL = 'https://alumni-portal-backend-swart.vercel.app/api';
+export const API_URL = 'https://api.sdmpalumniassociation.in/api';
