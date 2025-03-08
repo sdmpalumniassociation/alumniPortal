@@ -40,6 +40,7 @@ const Login = () => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
                 navigate('/user-homepage');
+                window.location.reload();
             } else {
                 setError(data.message || 'Login failed');
             }
