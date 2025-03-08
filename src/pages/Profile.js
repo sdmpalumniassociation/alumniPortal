@@ -1,402 +1,494 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
-import { API_URL } from '../util/config';
 import '../styles/Profile.css';
 
 function Profile() {
-    const navigate = useNavigate();
-    const [profile, setProfile] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        phone: '',
-        whatsappNumber: '',
-        branch: '',
-        graduationYear: '',
-        workingAs: '',
-        expertise: '',
+  // Sample user data
+  const initialUserData = {
+    name: "John Doe",
+    role: "Alumni",
+    graduationYear: "2020",
+    branch: "Computer Science and Engineering",
+    email: "johndoe@example.com",
+    phone: "+91 9876543210",
+    whatsAppNumber: "+91 9876543210",
+    address: "123 Main Street, Chennai, Tamil Nadu",
+    linkedIn: "linkedin.com/in/johndoe",
+    currentPosition: "Software Engineer",
+    company: "Tech Solutions Inc.",
+    hidePhoneNumber: false,
+    technicalExpertise: [
+      "React.js", 
+      "Node.js", 
+      "JavaScript", 
+      "TypeScript", 
+      "Python", 
+      "AWS", 
+      "Docker", 
+      "GraphQL", 
+      "MongoDB", 
+      "SQL"
+    ],
+    education: [
+      {
+        degree: "B.Tech",
+        field: "Computer Science and Engineering",
+        institution: "ABC Engineering College",
+        year: "2016-2020",
+        score: "8.7 CGPA"
+      },
+      {
+        degree: "M.Tech",
+        field: "Artificial Intelligence",
+        institution: "XYZ University",
+        year: "2021-2023",
+        score: "9.2 CGPA"
+      }
+    ]
+  };
+
+  const [userData, setUserData] = useState(initialUserData);
+  const [editMode, setEditMode] = useState(false);
+  const [tempUserData, setTempUserData] = useState({...initialUserData});
+  const [tempSkill, setTempSkill] = useState('');
+  const [whatsAppSameAsPhone, setWhatsAppSameAsPhone] = useState(
+    initialUserData.phone === initialUserData.whatsAppNumber
+  );
+
+  const handleEdit = () => {
+    setTempUserData({...userData});
+    setWhatsAppSameAsPhone(userData.phone === userData.whatsAppNumber);
+    setEditMode(true);
+  };
+
+  const handleSave = () => {
+    setUserData(tempUserData);
+    setEditMode(false);
+  };
+
+  const handleCancel = () => {
+    setEditMode(false);
+  };
+
+  const handleInputChange = (e, field) => {
+    setTempUserData({
+      ...tempUserData,
+      [field]: e.target.value
     });
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [previewUrl, setPreviewUrl] = useState(null);
 
-    // Fetch profile data
-    const fetchProfile = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                navigate('/login');
-                return;
-            }
-
-            const response = await fetch(`${API_URL}/users/profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            const data = await response.json();
-
-            if (response.ok) {
-                setProfile(data.user);
-                setFormData({
-                    fullName: data.user.fullName,
-                    email: data.user.email,
-                    phone: data.user.phone,
-                    whatsappNumber: data.user.whatsappNumber,
-                    branch: data.user.branch,
-                    graduationYear: data.user.graduationYear,
-                    workingAs: data.user.workingAs,
-                    expertise: data.user.expertise,
-                });
-                setError(null);
-            } else {
-                if (response.status === 401) {
-                    localStorage.removeItem('token');
-                    navigate('/login');
-                }
-                setError(data.message);
-            }
-        } catch (err) {
-            setError('Failed to fetch profile');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchProfile();
-    }, [navigate]);
-
-    // Handle form input changes
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    // Handle image change
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setSelectedImage(file);
-            setPreviewUrl(URL.createObjectURL(file));
-        }
-    };
-
-    // Handle form submission
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                navigate('/login');
-                return;
-            }
-
-            const formDataToSend = new FormData();
-            Object.keys(formData).forEach(key => {
-                formDataToSend.append(key, formData[key]);
-            });
-
-            if (selectedImage) {
-                formDataToSend.append('profileImage', selectedImage);
-            }
-
-            const response = await fetch(`${API_URL}/users/profile`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: formDataToSend
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setSuccess('Profile updated successfully');
-                setProfile(data.user);
-                setIsEditing(false);
-                setError(null);
-                setSelectedImage(null);
-            } else {
-                if (response.status === 401) {
-                    localStorage.removeItem('token');
-                    navigate('/login');
-                }
-                setError(data.message);
-            }
-        } catch (err) {
-            setError('Failed to update profile');
-        }
-    };
-
-    // Toggle phone visibility
-    const togglePhoneVisibility = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                navigate('/login');
-                return;
-            }
-
-            const response = await fetch(`${API_URL}/users/toggle-phone`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setProfile({ ...profile, hidePhone: data.hidePhone });
-                setSuccess('Phone visibility updated');
-                setError(null);
-            } else {
-                if (response.status === 401) {
-                    localStorage.removeItem('token');
-                    navigate('/login');
-                }
-                setError(data.message);
-            }
-        } catch (err) {
-            setError('Failed to update phone visibility');
-        }
-    };
-
-    // Clear success message after 3 seconds
-    useEffect(() => {
-        if (success) {
-            const timer = setTimeout(() => {
-                setSuccess(null);
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [success]);
-
-    if (loading) {
-        return (
-            <div className="loading-container">
-                <div className="loading">Loading profile...</div>
-            </div>
-        );
+    // If whatsAppSameAsPhone is checked and the phone is changing, update whatsApp number too
+    if (field === 'phone' && whatsAppSameAsPhone) {
+      setTempUserData(prev => ({
+        ...prev,
+        whatsAppNumber: e.target.value
+      }));
     }
+  };
 
-    return (
-        <div className="profile-page-layout">
-            <div className="profile-side-navbar">
-                <NavBar />
+  const handleToggleChange = (field) => {
+    setTempUserData(prev => ({
+      ...prev,
+      [field]: !prev[field]
+    }));
+  };
+
+  const handleWhatsAppSameAsPhone = (e) => {
+    const isChecked = e.target.checked;
+    setWhatsAppSameAsPhone(isChecked);
+    
+    if (isChecked) {
+      // If checked, set WhatsApp number to phone number
+      setTempUserData(prev => ({
+        ...prev,
+        whatsAppNumber: prev.phone
+      }));
+    }
+  };
+
+  const handleSkillChange = (e) => {
+    setTempSkill(e.target.value);
+  };
+
+  const addSkill = () => {
+    if (tempSkill.trim() !== '') {
+      setTempUserData({
+        ...tempUserData,
+        technicalExpertise: [...tempUserData.technicalExpertise, tempSkill.trim()]
+      });
+      setTempSkill('');
+    }
+  };
+
+  const removeSkill = (skillToRemove) => {
+    setTempUserData({
+      ...tempUserData,
+      technicalExpertise: tempUserData.technicalExpertise.filter(
+        skill => skill !== skillToRemove
+      )
+    });
+  };
+
+  const handleEducationChange = (index, field, value) => {
+    const updatedEducation = [...tempUserData.education];
+    updatedEducation[index] = {
+      ...updatedEducation[index],
+      [field]: value
+    };
+    setTempUserData({
+      ...tempUserData,
+      education: updatedEducation
+    });
+  };
+
+  // Function to mask phone numbers for privacy
+  const maskPhoneNumber = (phoneNumber) => {
+    if (!phoneNumber) return '';
+    // Hide the number except last 4 digits
+    const lastFourDigits = phoneNumber.slice(-4);
+    return `**********${lastFourDigits}`;
+  };
+
+  // Function to display the phone number based on privacy settings
+  const displayPhoneNumber = (phoneNumber) => {
+    if (!userData.hidePhoneNumber) {
+      return phoneNumber;
+    }
+    return maskPhoneNumber(phoneNumber);
+  };
+
+  return (
+    <div className="profile-page-layout">
+      <div className="profile-side-navbar">
+        <NavBar />
+      </div>
+      
+      <div className="profile-main-content">
+        <div className="profile-wrapper">
+          <div className="profile-heading">
+            <h1>Profile</h1>
+            <p>View and manage your personal information</p>
+          </div>
+          
+          <div className="profile-container">
+            <div className="profile-header">
+              <div className="profile-avatar">
+                <img src="/icons/user-avatar.png" alt="Profile" />
+              </div>
+              <div className="profile-name-info">
+                <h2>{userData.name}</h2>
+                <p>{userData.role} • {userData.graduationYear}</p>
+              </div>
+              <div className="profile-edit-button">
+                {!editMode ? (
+                  <button onClick={handleEdit}>Edit Profile</button>
+                ) : (
+                  <div className="edit-buttons">
+                    <button className="save-button" onClick={handleSave}>Save</button>
+                    <button className="cancel-button" onClick={handleCancel}>Cancel</button>
+                  </div>
+                )}
+              </div>
             </div>
-
-            <div className="profile-main-content">
-                <div className="profile-wrapper">
-                    <Card className="profile-card">
-                        <Card.Header>
-                            <h4>My Profile</h4>
-                            {!isEditing && (
-                                <Button
-                                    variant="primary"
-                                    onClick={() => setIsEditing(true)}
-                                    className="edit-profile-btn"
-                                >
-                                    Edit Profile
-                                </Button>
-                            )}
-                        </Card.Header>
-                        <Card.Body>
-                            {error && <Alert variant="danger">{error}</Alert>}
-                            {success && <Alert variant="success">{success}</Alert>}
-
-                            {isEditing ? (
-                                <Form onSubmit={handleSubmit} className="profile-form">
-                                    <div className="profile-image-upload">
-                                        <img
-                                            src={profile.imageUrl}
-                                            alt="Profile"
-                                            className="profile-image"
-                                            onError={(e) => {
-                                                e.target.src = `${API_URL}/uploads/profiles/default-profile.jpg`;
-                                            }}
-                                        />
-                                        <Form.Group>
-                                            <Form.Label>Profile Image:</Form.Label>
-                                            <Form.Control
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={handleImageChange}
-                                            />
-                                        </Form.Group>
-                                    </div>
-
-                                    <Form.Group>
-                                        <Form.Label>Full Name:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="fullName"
-                                            value={formData.fullName}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="Enter your full name"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Email:</Form.Label>
-                                        <Form.Control
-                                            type="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="Enter your email"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Phone Number:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="Enter your phone number"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>WhatsApp Number:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="whatsappNumber"
-                                            value={formData.whatsappNumber}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="Enter your WhatsApp number"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Branch:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="branch"
-                                            value={formData.branch}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="Enter your branch"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Graduation Year:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="graduationYear"
-                                            value={formData.graduationYear}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="Enter your graduation year"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Working As:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="workingAs"
-                                            value={formData.workingAs}
-                                            onChange={handleChange}
-                                            placeholder="Enter your current position"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Expertise:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="expertise"
-                                            value={formData.expertise}
-                                            onChange={handleChange}
-                                            placeholder="Enter your areas of expertise"
-                                        />
-                                    </Form.Group>
-
-                                    <div className="profile-actions">
-                                        <Button variant="secondary" onClick={() => setIsEditing(false)}>
-                                            Cancel
-                                        </Button>
-                                        <Button variant="primary" type="submit">
-                                            Save Changes
-                                        </Button>
-                                    </div>
-                                </Form>
-                            ) : (
-                                <div className="profile-info">
-                                    <div className="profile-image-container">
-                                        <img
-                                            src={profile.imageUrl}
-                                            alt="Profile"
-                                            className="profile-image"
-                                            onError={(e) => {
-                                                e.target.src = `https://ny2fsuwtzwiq1t6s.public.blob.vercel-storage.com/default-user-JkNfvWTp7X1p14TXs1462jMc4PgNew.png`;
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>Full Name:</strong>
-                                        <span className="profile-field-value">{profile.fullName}</span>
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>Email:</strong>
-                                        <span className="profile-field-value">{profile.email}</span>
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>Phone Number:</strong>
-                                        <span className="profile-field-value">
-                                            {profile.hidePhone ? '*** (Hidden)' : profile.phone}
-                                        </span>
-                                        <button
-                                            onClick={togglePhoneVisibility}
-                                            className="visibility-toggle"
-                                        >
-                                            {profile.hidePhone ? 'Show' : 'Hide'}
-                                        </button>
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>WhatsApp Number:</strong>
-                                        <span className="profile-field-value">{profile.whatsappNumber}</span>
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>Branch:</strong>
-                                        <span className="profile-field-value">{profile.branch}</span>
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>Graduation Year:</strong>
-                                        <span className="profile-field-value">{profile.graduationYear}</span>
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>Working As:</strong>
-                                        <span className="profile-field-value">{profile.workingAs}</span>
-                                    </div>
-                                    <div className="profile-field">
-                                        <strong>Expertise:</strong>
-                                        <span className="profile-field-value">{profile.expertise}</span>
-                                    </div>
-                                </div>
-                            )}
-                        </Card.Body>
-                    </Card>
+            
+            <div className="profile-content">
+              <div className="profile-section">
+                <h3>Personal Information</h3>
+                <div className="profile-info-grid">
+                  <div className="profile-info-item">
+                    <span className="info-label">Name</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.name}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.name}
+                        onChange={(e) => handleInputChange(e, 'name')}
+                      />
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">Role</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.role}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.role}
+                        onChange={(e) => handleInputChange(e, 'role')}
+                      />
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">Graduation Year</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.graduationYear}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.graduationYear}
+                        onChange={(e) => handleInputChange(e, 'graduationYear')}
+                      />
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">Branch</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.branch}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.branch}
+                        onChange={(e) => handleInputChange(e, 'branch')}
+                      />
+                    )}
+                  </div>
                 </div>
+              </div>
+              
+              <div className="profile-section">
+                <h3>Education</h3>
+                <div className="education-list">
+                  {(editMode ? tempUserData.education : userData.education).map((edu, index) => (
+                    <div key={index} className="education-item">
+                      {!editMode ? (
+                        <>
+                          <div className="education-header">
+                            <h4>{edu.degree} in {edu.field}</h4>
+                            <span className="education-year">{edu.year}</span>
+                          </div>
+                          <div className="education-details">
+                            <p className="education-institution">{edu.institution}</p>
+                            <p className="education-score">Score: {edu.score}</p>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="education-edit">
+                          <div className="education-edit-row">
+                            <div className="education-edit-field">
+                              <label>Degree</label>
+                              <input
+                                type="text"
+                                value={edu.degree}
+                                onChange={(e) => handleEducationChange(index, 'degree', e.target.value)}
+                              />
+                            </div>
+                            <div className="education-edit-field">
+                              <label>Field</label>
+                              <input
+                                type="text"
+                                value={edu.field}
+                                onChange={(e) => handleEducationChange(index, 'field', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <div className="education-edit-row">
+                            <div className="education-edit-field">
+                              <label>Institution</label>
+                              <input
+                                type="text"
+                                value={edu.institution}
+                                onChange={(e) => handleEducationChange(index, 'institution', e.target.value)}
+                              />
+                            </div>
+                            <div className="education-edit-field">
+                              <label>Year</label>
+                              <input
+                                type="text"
+                                value={edu.year}
+                                onChange={(e) => handleEducationChange(index, 'year', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <div className="education-edit-row">
+                            <div className="education-edit-field">
+                              <label>Score</label>
+                              <input
+                                type="text"
+                                value={edu.score}
+                                onChange={(e) => handleEducationChange(index, 'score', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="profile-section">
+                <h3>Contact Information</h3>
+                <div className="profile-info-grid">
+                  <div className="profile-info-item">
+                    <span className="info-label">Email</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.email}</span>
+                    ) : (
+                      <input 
+                        type="email" 
+                        className="edit-input" 
+                        value={tempUserData.email}
+                        onChange={(e) => handleInputChange(e, 'email')}
+                      />
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">Phone</span>
+                    {!editMode ? (
+                      <span className="info-value">{displayPhoneNumber(userData.phone)}</span>
+                    ) : (
+                      <div className="phone-input-group">
+                        <input 
+                          type="text" 
+                          className="edit-input" 
+                          value={tempUserData.phone}
+                          onChange={(e) => handleInputChange(e, 'phone')}
+                        />
+                        <div className="toggle-wrapper">
+                          <label className="toggle-label">
+                            <input 
+                              type="checkbox" 
+                              checked={tempUserData.hidePhoneNumber}
+                              onChange={() => handleToggleChange('hidePhoneNumber')}
+                              className="toggle-input"
+                            />
+                            <span className="toggle-slider"></span>
+                          </label>
+                          <span className="toggle-text">Hide my phone numbers</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">WhatsApp Number</span>
+                    {!editMode ? (
+                      <span className="info-value">{displayPhoneNumber(userData.whatsAppNumber)}</span>
+                    ) : (
+                      <div className="whatsapp-input-group">
+                        <input 
+                          type="text" 
+                          className="edit-input" 
+                          value={tempUserData.whatsAppNumber}
+                          onChange={(e) => handleInputChange(e, 'whatsAppNumber')}
+                          disabled={whatsAppSameAsPhone}
+                        />
+                        <div className="checkbox-wrapper">
+                          <input 
+                            type="checkbox" 
+                            id="whatsapp-same-as-phone" 
+                            checked={whatsAppSameAsPhone}
+                            onChange={handleWhatsAppSameAsPhone}
+                          />
+                          <label htmlFor="whatsapp-same-as-phone">Same as Phone Number</label>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">Address</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.address}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.address}
+                        onChange={(e) => handleInputChange(e, 'address')}
+                      />
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">LinkedIn</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.linkedIn}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.linkedIn}
+                        onChange={(e) => handleInputChange(e, 'linkedIn')}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="profile-section">
+                <h3>Professional Information</h3>
+                <div className="profile-info-grid">
+                  <div className="profile-info-item">
+                    <span className="info-label">Current Position</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.currentPosition}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.currentPosition}
+                        onChange={(e) => handleInputChange(e, 'currentPosition')}
+                      />
+                    )}
+                  </div>
+                  <div className="profile-info-item">
+                    <span className="info-label">Company</span>
+                    {!editMode ? (
+                      <span className="info-value">{userData.company}</span>
+                    ) : (
+                      <input 
+                        type="text" 
+                        className="edit-input" 
+                        value={tempUserData.company}
+                        onChange={(e) => handleInputChange(e, 'company')}
+                      />
+                    )}
+                  </div>
+                </div>
+                
+                <h4 className="subsection-title">Technical Expertise</h4>
+                {!editMode ? (
+                  <div className="skills-container">
+                    {userData.technicalExpertise.map((skill, index) => (
+                      <span key={index} className="skill-tag">{skill}</span>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="edit-skills-section">
+                    <div className="skills-container">
+                      {tempUserData.technicalExpertise.map((skill, index) => (
+                        <span key={index} className="skill-tag editable">
+                          {skill}
+                          <button
+                            className="remove-skill"
+                            onClick={() => removeSkill(skill)}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <div className="add-skill-input">
+                      <input
+                        type="text"
+                        placeholder="Add a skill"
+                        value={tempSkill}
+                        onChange={handleSkillChange}
+                        onKeyPress={(e) => e.key === 'Enter' && addSkill()}
+                      />
+                      <button onClick={addSkill}>Add</button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default Profile;
