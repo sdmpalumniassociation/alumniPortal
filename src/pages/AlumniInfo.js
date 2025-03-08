@@ -154,7 +154,7 @@ function AlumniInfo() {
                         </div>
 
                         {/* Technical Expertise */}
-                        {alumniData.technicalExpertise && alumniData.technicalExpertise.length > 0 && (
+                        {alumniData.technicalExpertise && Array.isArray(alumniData.technicalExpertise) && alumniData.technicalExpertise.length > 0 && (
                             <>
                                 <hr className="section-divider" />
                                 <div className="technical-section">
@@ -183,17 +183,25 @@ function AlumniInfo() {
                                 </div>
 
                                 {/* Display other education details if available */}
-                                {alumniData.education && alumniData.education.length > 0 &&
-                                    alumniData.education.map((edu, index) => (
+                                {Array.isArray(alumniData.education) 
+                                    ? alumniData.education.map((edu, index) => (
                                         <div key={index} className="education-item">
                                             <div className="education-header">
-                                                <h4>{edu.degree} {edu.field && `in ${edu.field}`}</h4>
+                                                <h4>{edu.degree} in {edu.field}</h4>
                                                 <span className="education-year">{edu.year}</span>
                                             </div>
-                                            <p className="education-institution">{edu.institution}</p>
-                                            {edu.score && <p className="education-score">Score: {edu.score}</p>}
+                                            <div className="education-details">
+                                                <p className="education-institution">{edu.institution}</p>
+                                            </div>
                                         </div>
                                     ))
+                                    : (
+                                        <div className="education-item">
+                                            <div className="education-header">
+                                                <h4>{alumniData.education || 'No education information available'}</h4>
+                                            </div>
+                                        </div>
+                                    )
                                 }
                             </div>
                         </div>
@@ -227,12 +235,6 @@ function AlumniInfo() {
                                         <a href={alumniData.linkedIn} target="_blank" rel="noopener noreferrer">
                                             LinkedIn Profile
                                         </a>
-                                    </div>
-                                )}
-                                {alumniData.address && (
-                                    <div className="contact-item">
-                                        <FaMapMarkerAlt className="contact-icon" />
-                                        <span>{alumniData.address}</span>
                                     </div>
                                 )}
                             </div>

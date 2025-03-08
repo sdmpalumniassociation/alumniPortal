@@ -60,6 +60,7 @@ const NavBar = () => {
                     <FaSignOutAlt />
                     <span>Logout</span>
                 </button>
+                
             </div>
         </div>
     );
