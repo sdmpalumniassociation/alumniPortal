@@ -8,7 +8,6 @@ import Login from './components/Login';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Register from './components/Register';
-import UserHomepage from './pages/UserHomepage';
 import Profile from './pages/Profile';
 import Faculties from './pages/Faculties';
 import AlumniList from './pages/AlumniList';

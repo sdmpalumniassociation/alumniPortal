@@ -1,38 +1,41 @@
 .alumni-page-layout {
     display: flex;
     min-height: 100vh;
-    background-color: #fff;
+    height: 100vh;
     width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .alumni-side-navbar {
-    width: 250px;
-    min-height: 100vh;
+    width: 220px;
+    height: 100vh;
     background-color: #f5f5f5;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 10;
     border-right: 1px solid #ddd;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
 .alumni-main-content {
     flex: 1;
-    padding: 0;
-    max-width: calc(100% - 250px);
+    max-width: calc(100% - 220px);
     width: 100%;
     background-color: #FFF5E6;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .loading-content {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .loading-message {
@@ -40,109 +43,113 @@
     font-weight: 500;
     color: #333;
     margin-top: 50px;
-    text-align: left;
 }
 
 .alumni-info-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .alumni-info-container {
-    background: #FFE5B4;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
     padding: 2rem;
+    box-sizing: border-box;
 }
 
-/* Profile Section */
 .alumni-profile-section {
     display: flex;
     gap: 2rem;
     margin-bottom: 2rem;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
 }
 
 .alumni-photo-container {
+    width: 150px;
     flex-shrink: 0;
 }
 
 .alumni-photo {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+    width: 150px;
+    height: 180px;
     object-fit: cover;
-    border: 4px solid #FFE5B4;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #FFE5B4;
 }
 
 .alumni-details-container {
-    flex-grow: 1;
+    flex: 1;
+    min-width: 0;
 }
 
 .alumni-name {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: #333;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
 }
 
 .alumni-id {
     color: #666;
     font-size: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .alumni-branch {
-    color: #444;
-    font-size: 1.1rem;
+    color: #333;
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
 }
 
 .alumni-position {
+    display: inline-block;
+    background: #FFE5B4;
     color: #FF6B00;
-    font-size: 1.2rem;
-    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    word-wrap: break-word;
 }
 
-/* Section Divider */
 .section-divider {
     border: none;
-    border-top: 1px solid #fff;
+    height: 1px;
+    background-color: #eee;
     margin: 2rem 0;
+    width: 100%;
 }
 
-/* Professional Section */
 .professional-section,
-.technical-section,
-.education-section,
 .contact-section {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
 }
 
 .professional-section h3,
-.technical-section h3,
-.education-section h3,
-.contact-section h3 {
+.contact-section h3,
+.education-section h3 {
     color: #333;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #FFE5B4;
 }
 
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
+    width: 100%;
 }
 
 .info-item {
@@ -150,6 +157,7 @@
     padding: 1.5rem;
     border-radius: 8px;
     border: 1px solid #FFE5B4;
+    word-wrap: break-word;
 }
 
 .info-item h4 {
@@ -162,6 +170,7 @@
 .info-item p {
     color: #333;
     font-size: 1.1rem;
+    word-wrap: break-word;
 }
 
 /* Technical Skills */
@@ -169,6 +178,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem;
+    width: 100%;
 }
 
 .skill-tag {
@@ -179,6 +189,7 @@
     font-size: 0.9rem;
     transition: all 0.2s;
     border: 1px solid #FFE5B4;
+    word-break: break-word;
 }
 
 .skill-tag:hover {
@@ -187,10 +198,6 @@
 
 /* Education Section */
 .education-section {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
 }
 
@@ -198,13 +205,15 @@
     color: #333;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #FFE5B4;
 }
 
 .education-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+    width: 100%;
 }
 
 .education-item {
@@ -216,9 +225,8 @@
 }
 
 .education-item:hover {
-    background: #FFE5B4;
     transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .education-header {
@@ -227,60 +235,61 @@
     align-items: flex-start;
     margin-bottom: 0.8rem;
     flex-wrap: wrap;
-    gap: 0.5rem;
 }
 
 .education-header h4 {
     color: #333;
     font-size: 1.2rem;
-    margin: 0;
+    margin-bottom: 0.5rem;
     font-weight: 600;
     flex: 1;
+    min-width: 200px;
+    word-wrap: break-word;
 }
 
 .education-year {
     color: #FF6B00;
-    font-size: 1rem;
     font-weight: 500;
-    padding: 0.2rem 0.8rem;
-    background: #fff;
-    border-radius: 15px;
-    border: 1px solid #FFE5B4;
+    background: rgba(255, 107, 0, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    margin-left: 1rem;
 }
 
 .education-institution {
-    color: #495057;
+    color: #333;
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
+    word-wrap: break-word;
 }
 
 .education-score {
     color: #666;
     font-size: 1rem;
-    background: #fff;
-    padding: 0.2rem 0.8rem;
-    border-radius: 15px;
-    display: inline-block;
-    border: 1px solid #FFE5B4;
 }
 
-/* Contact Section */
+/* Contact Information */
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.5rem;
+    width: 100%;
 }
 
 .contact-item {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 1rem;
+    gap: 1rem;
+    padding: 1.2rem;
     background: #FFF5E6;
     border-radius: 8px;
-    transition: all 0.2s;
     border: 1px solid #FFE5B4;
+    transition: all 0.2s;
+    cursor: pointer;
+    word-break: break-word;
 }
 
 .contact-item:hover {
@@ -289,22 +298,22 @@
 
 .contact-icon {
     color: #FF6B00;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 .contact-item a {
-    color: #FF6B00;
+    color: #333;
     text-decoration: none;
 }
 
 .contact-item a:hover {
-    text-decoration: underline;
+    color: #FF6B00;
 }
 
-/* Back Button */
 .back-button-container {
+    display: flex;
+    justify-content: center;
     margin-top: 2rem;
-    text-align: center;
 }
 
 .back-button {
@@ -312,94 +321,88 @@
     color: white;
     border: none;
     padding: 0.8rem 2rem;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(255, 107, 0, 0.2);
 }
 
 .back-button:hover {
-    background: #e65c00;
+    background: #E55000;
 }
 
-/* Loading and Error States */
 .loading-content,
 .error-content {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-height: 400px;
+    align-items: center;
+    height: 50vh;
+    width: 100%;
 }
 
 .loading-message,
 .error-message {
     font-size: 1.2rem;
     color: #666;
-    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
-/* Responsive Design */
+/* Responsive Styles */
 @media (max-width: 992px) {
     .alumni-side-navbar {
-        width: 200px;
+        width: 180px;
     }
-
     .alumni-main-content {
-        max-width: calc(100% - 200px);
+        max-width: calc(100% - 180px);
     }
 }
 
 @media (max-width: 768px) {
     .alumni-page-layout {
         flex-direction: column;
+        height: 100vh;
     }
-
     .alumni-side-navbar {
         width: 100%;
-        min-height: auto;
+        height: auto;
+        min-height: 60px;
+        max-height: 60px;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-
     .alumni-main-content {
         max-width: 100%;
+        height: calc(100vh - 60px);
     }
-
     .alumni-profile-section {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 1.5rem;
     }
-
     .alumni-photo {
-        width: 150px;
+        width: 130px;
         height: 150px;
     }
-
     .info-grid,
     .contact-grid {
         grid-template-columns: 1fr;
     }
-
     .education-section {
-        padding: 1.5rem;
+        padding: 0;
     }
-
     .education-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.8rem;
     }
-
     .education-header h4 {
-        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
     }
-
     .education-year {
-        font-size: 0.9rem;
+        margin-left: 0;
     }
-
     .education-institution {
         font-size: 1rem;
     }
@@ -409,28 +412,22 @@
     .alumni-info-wrapper {
         padding: 1rem;
     }
-
     .alumni-info-container {
-        padding: 1rem;
+        padding: 1.5rem;
     }
-
     .alumni-name {
         font-size: 1.5rem;
     }
-
     .contact-item {
-        padding: 0.8rem;
+        padding: 1rem;
     }
-
     .education-section {
-        padding: 1rem;
+        margin-bottom: 1.5rem;
     }
-
     .education-item {
-        padding: 1rem;
+        padding: 1.2rem;
     }
-
     .education-header h4 {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 }

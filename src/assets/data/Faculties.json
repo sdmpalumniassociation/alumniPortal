@@ -52,7 +52,7 @@
         "designation": "Head of Department, Electronics & Communication",
         "phoneNumber": "+919480053544",
         "emailId": "",
-        "profilePhoto": "../../assets/images/Mary.jpg",
+        "profilePhoto": "../../assets/images/Marysmitha.jpg",
         "branch": "Electronics & Communication"
     },
     {
@@ -60,7 +60,7 @@
         "designation": "Lecturer",
         "phoneNumber": "+919741485608",
         "emailId": "amareshhebbar@sdmpolytechnic.in",
-        "profilePhoto": "../../assets/images/Amaresha.jpg",
+        "profilePhoto": "../../assets/images/Amaresh.jpg",
         "branch": "Electronics & Communication"
     },
     {
@@ -116,7 +116,7 @@
         "designation": "Lecturer",
         "phoneNumber": "",
         "emailId": "",
-        "profilePhoto": "../../assets/images/Ishwara.jpg",
+        "profilePhoto": "../../assets/images/Ishwarasharma.jpg",
         "branch": "Civil Engineering"
     },
     {
@@ -148,7 +148,7 @@
         "designation": "Head of Department, Mechanical Engineering",
         "phoneNumber": "",
         "emailId": "",
-        "profilePhoto": "../../assets/images/Dinesh_HOD.jpg",
+        "profilePhoto": "../../assets/images/Shreyank.jpg",
         "branch": "Mechanical Engineering"
     },
     {
@@ -164,7 +164,7 @@
         "designation": "Lecturer",
         "phoneNumber": "+919535284720",
         "emailId": "shivaprasad@sdmpolytechnic.in",
-        "profilePhoto": "../../assets/images/Shiva.jpg",
+        "profilePhoto": "../../assets/images/Shivaprasad.jpg",
         "branch": "Mechanical Engineering"
     },
     {
@@ -188,7 +188,7 @@
         "designation": "Lecturer",
         "phoneNumber": "+918660811972",
         "emailId": "saicharan@sdmpolytechnic.in",
-        "profilePhoto": "../../assets/images/SaiCharan.jpg",
+        "profilePhoto": "../../assets/images/Sai-Charan.jpg",
         "branch": "Mechanical Engineering"
     }
 ]

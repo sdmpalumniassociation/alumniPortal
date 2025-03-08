@@ -336,7 +336,7 @@ function Profile() {
                             <div className="profile-section">
                                 <h3>Education</h3>
                                 <div className="education-list">
-                                    {(editMode ? tempUserData.education : userData.education || []).map((edu, index) => (
+                                    {(editMode ? (tempUserData.education || []) : (userData.education || [])).map((edu, index) => (
                                         <div key={index} className="education-item">
                                             {!editMode ? (
                                                 <>

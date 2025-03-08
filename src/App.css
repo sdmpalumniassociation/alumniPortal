@@ -878,8 +878,12 @@ select.login-input {
 }
 
 .logout {
-  margin-top: auto;
   color: #dc3545;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 
 .logout:hover {
