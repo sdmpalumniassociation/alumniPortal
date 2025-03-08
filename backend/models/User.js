@@ -44,15 +44,18 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minlength: [8, 'Password must be at least 8 characters long']
     },
     graduationYear: {
         type: String,
-        required: true
+        required: true,
+        enum: Array.from({ length: 15 }, (_, i) => (new Date().getFullYear() - i).toString())
     },
     branch: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Civil Engineering', 'Computer Science & Engineering', 'Electronics & Communication Engineering', 'Mechanical Engineering', 'Information Science Engineering']
     },
     address: {
         type: String,
@@ -70,14 +73,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'Not specified'
     },
-    workingAs: {
-        type: String,
-        default: 'Not specified'
-    },
-    expertise: {
-        type: String,
-        default: 'Not specified'
-    },
     technicalExpertise: {
         type: [String],
         default: []
@@ -86,8 +81,7 @@ const userSchema = new mongoose.Schema({
         degree: String,
         field: String,
         institution: String,
-        year: String,
-        score: String
+        year: String
     }],
     imageUrl: {
         type: String,

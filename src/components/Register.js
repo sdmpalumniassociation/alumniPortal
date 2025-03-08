@@ -18,6 +18,10 @@ const Register = () => {
         branch: ''
     });
 
+    const [errors, setErrors] = useState({
+        password: '',
+        confirmPassword: ''
+    });
     const [loading, setLoading] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
     const navigate = useNavigate();
@@ -42,6 +46,13 @@ const Register = () => {
         fetchNextAlumniId();
     }, []);
 
+    const validatePassword = (password) => {
+        if (password.length < 8) {
+            return 'Password must be at least 8 characters long';
+        }
+        return '';
+    };
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
@@ -59,6 +70,24 @@ const Register = () => {
                     ? { whatsappNumber: value }
                     : {})
             }));
+
+            // Password validation
+            if (name === 'password') {
+                const passwordError = validatePassword(value);
+                setErrors(prev => ({
+                    ...prev,
+                    password: passwordError,
+                    confirmPassword: value !== formData.confirmPassword ? 'Passwords do not match' : ''
+                }));
+            }
+
+            // Confirm password validation
+            if (name === 'confirmPassword') {
+                setErrors(prev => ({
+                    ...prev,
+                    confirmPassword: value !== formData.password ? 'Passwords do not match' : ''
+                }));
+            }
         }
     };
 
@@ -66,9 +95,17 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
 
+        // Validate password
+        const passwordError = validatePassword(formData.password);
+        if (passwordError) {
+            setErrors(prev => ({ ...prev, password: passwordError }));
+            setLoading(false);
+            return;
+        }
+
         // Check if passwords match
         if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
+            setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }));
             setLoading(false);
             return;
         }
@@ -104,9 +141,10 @@ const Register = () => {
 
     const branches = [
         'Civil Engineering',
-        'Computer Science',
-        'Electronics & Communication',
-        'Mechanical Engineering'
+        'Computer Science & Engineering',
+        'Electronics & Communication Engineering',
+        'Mechanical Engineering',
+        'Information Science Engineering'
     ];
 
     const years = Array.from({ length: 15 }, (_, i) => new Date().getFullYear() - i);
@@ -276,10 +314,11 @@ const Register = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="login-input"
-                                placeholder="Create a password"
+                                className={`login-input ${errors.password ? 'error-input' : ''}`}
+                                placeholder="Create a password (minimum 8 characters)"
                                 required
                             />
+                            {errors.password && <span className="error-message">{errors.password}</span>}
                         </div>
 
                         <div className="form-group">
@@ -289,10 +328,11 @@ const Register = () => {
                                 name="confirmPassword"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
-                                className="login-input"
+                                className={`login-input ${errors.confirmPassword ? 'error-input' : ''}`}
                                 placeholder="Confirm your password"
                                 required
                             />
+                            {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
                         </div>
 
                         <button type="submit" className="login-button" disabled={loading}>

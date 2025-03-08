@@ -173,8 +173,10 @@ const userController = {
                 fullName: user.fullName,
                 branch: user.branch,
                 graduatedYear: user.graduationYear,
-                workingAs: user.workingAs,
-                imageUrl: user.imageUrl
+                currentPosition: user.currentPosition,
+                imageUrl: user.imageUrl,
+                technicalExpertise: user.technicalExpertise
+
             }));
 
             res.status(200).json({
@@ -209,10 +211,8 @@ const userController = {
                 alumniId: user.alumniId,
                 graduatedYear: user.graduationYear,
                 branch: user.branch,
-                workingAs: user.workingAs || 'Not specified',
                 currentPosition: user.currentPosition || 'Not specified',
                 company: user.company || 'Not specified',
-                expertise: user.expertise || 'Not specified',
                 technicalExpertise: user.technicalExpertise || [],
                 education: user.education || [],
                 linkedIn: user.linkedIn || '',
@@ -263,9 +263,12 @@ const userController = {
         try {
             const userId = req.userId;
 
+            // Parse the JSON data from FormData
+            const userData = JSON.parse(req.body.userData);
+
             // Check for existing email and phone
-            if (req.body.email) {
-                const existingEmail = await User.findOne({ email: req.body.email, _id: { $ne: userId } });
+            if (userData.email) {
+                const existingEmail = await User.findOne({ email: userData.email, _id: { $ne: userId } });
                 if (existingEmail) {
                     return res.status(400).json({
                         success: false,
@@ -274,8 +277,8 @@ const userController = {
                 }
             }
 
-            if (req.body.phone) {
-                const existingPhone = await User.findOne({ phone: req.body.phone, _id: { $ne: userId } });
+            if (userData.phone) {
+                const existingPhone = await User.findOne({ phone: userData.phone, _id: { $ne: userId } });
                 if (existingPhone) {
                     return res.status(400).json({
                         success: false,
@@ -286,11 +289,16 @@ const userController = {
 
             // Prepare update data
             const updateData = {
-                ...req.body,
-                hidePhone: req.body.hidePhone === true || req.body.hidePhone === 'true',
-                education: Array.isArray(req.body.education) ? req.body.education : [],
-                technicalExpertise: Array.isArray(req.body.technicalExpertise) ? req.body.technicalExpertise : []
+                ...userData,
+                hidePhone: userData.hidePhone === true || userData.hidePhone === 'true',
+                education: Array.isArray(userData.education) ? userData.education : [],
+                technicalExpertise: Array.isArray(userData.technicalExpertise) ? userData.technicalExpertise : []
             };
+
+            // Add image URL if file was uploaded
+            if (req.file && req.file.location) {
+                updateData.imageUrl = req.file.location;
+            }
 
             // Update user
             const updatedUser = await User.findByIdAndUpdate(
@@ -349,6 +357,55 @@ const userController = {
             res.status(500).json({
                 success: false,
                 message: 'Error updating phone visibility'
+            });
+        }
+    },
+
+    updatePassword: async (req, res) => {
+        try {
+            const userId = req.userId;
+            const { currentPassword, newPassword } = req.body;
+
+            // Find user
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'User not found'
+                });
+            }
+
+            // Verify current password
+            const isPasswordValid = await user.comparePassword(currentPassword);
+            if (!isPasswordValid) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Current password is incorrect'
+                });
+            }
+
+            // Validate new password length
+            if (newPassword.length < 8) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'New password must be at least 8 characters long'
+                });
+            }
+
+            // Update password
+            user.password = newPassword;
+            await user.save();
+
+            res.json({
+                success: true,
+                message: 'Password updated successfully'
+            });
+        } catch (error) {
+            console.error('Update password error:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Error updating password',
+                error: error.message
             });
         }
     }
