@@ -150,19 +150,50 @@
 
 .edit-input {
     width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
+    padding: 8px 10px;
+    border: 1px solid #dddddd;
     border-radius: 4px;
-    font-size: 16px;
-    color: #333;
-    background-color: white;
-    transition: border-color 0.2s;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    margin-top: 4px;
+
 }
 
 .edit-input:focus {
-    border-color: #FF9933;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.2);
+    border-color: #FF6B00;
+    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+}
+
+/* Style for select dropdowns */
+select.edit-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 1em;
+    padding-right: 40px;
+}
+
+/* Form group spacing */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Add margin between sections */
+.profile-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Phone toggle styles */
@@ -268,9 +299,87 @@
 }
 
 .education-edit {
-    padding: 5px;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 6px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+}
+
+.education-edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.education-edit-header h4 {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+}
+
+.remove-education-button {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.remove-education-button:hover {
+    background-color: #ff7875;
+}
+
+.add-education-button {
+    width: 100%;
+    background-color: #FF9933;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    box-shadow: 0 2px 4px rgba(255, 153, 51, 0.2);
+}
+
+.add-education-button:hover {
+    background-color: #FF8000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 153, 51, 0.3);
+}
+
+.education-edit-field input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.education-edit-field input:focus {
+    border-color: #FF9933;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.1);
+}
+
+.education-edit-field input::placeholder {
+    color: #999;
 }
 
 .education-edit-row {
@@ -289,19 +398,6 @@
     font-size: 13px;
     color: #666;
     margin-bottom: 5px;
-}
-
-.education-edit-field input {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.education-edit-field input:focus {
-    border-color: #FF9933;
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.2);
 }
 
 .edit-skills-section {
@@ -606,6 +702,10 @@
     .phone-input-group {
         width: 100%;
     }
+
+    .password-update-form {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -691,4 +791,59 @@
     .toggle-input:checked+.toggle-slider:before {
         transform: translateX(18px);
     }
+}
+
+.password-update-form {
+    max-width: 400px;
+    margin: 1rem 0;
+}
+
+.password-update-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.password-update-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.password-update-form .edit-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.password-update-form .edit-input:focus {
+    border-color: #FF9933;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.1);
+}
+
+.update-password-button {
+    background-color: #FF9933;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.update-password-button:hover {
+    background-color: #FF8000;
+    transform: translateY(-1px);
+}
+
+.update-password-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
 }

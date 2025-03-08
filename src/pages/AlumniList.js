@@ -57,7 +57,10 @@ function AlumniList() {
     const filteredAlumni = alumniData.filter(alumni =>
         alumni.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         alumni.branch.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (alumni.workingAs && alumni.workingAs.toLowerCase().includes(searchQuery.toLowerCase()))
+        (alumni.workingAs && alumni.workingAs.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (alumni.technicalExpertise && alumni.technicalExpertise.some(skill =>
+            skill.toLowerCase().includes(searchQuery.toLowerCase())
+        ))
     );
 
     const handleViewProfile = (id) => {
@@ -83,7 +86,7 @@ function AlumniList() {
                     <div className="search-box">
                         <input
                             type="text"
-                            placeholder="Search by name, branch, or profession"
+                            placeholder="Search by name, branch, profession, or technical skills"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -106,7 +109,14 @@ function AlumniList() {
                                 <div className="alumni-details">
                                     <h3>{alumni.fullName}</h3>
                                     <p>{alumni.branch} - ({alumni.graduatedYear})</p>
-                                    <p>{alumni.workingAs || 'Not specified'}</p>
+                                    <p>{alumni.currentPosition || 'Not specified'}</p>
+                                    {alumni.technicalExpertise && alumni.technicalExpertise.length > 0 && (
+                                        <div className="alumni-skills">
+                                            {alumni.technicalExpertise.map((skill, index) => (
+                                                <span key={index} className="skill-tag">{skill}</span>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <div className="view-profile">
