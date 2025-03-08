@@ -1,21 +1,35 @@
-import React from 'react'
-import NavBar from '../components/NavBar'
-import facultyData from '../assets/data/Faculties.json'
-
-// Import all faculty images
-const importAll = (r) => {
-    let images = {};
-    r.keys().forEach((item) => {
-        const name = item.replace('./', '').split('.')[0];
-        images[name] = r(item);
-    });
-    return images;
-};
-
-// Import all images from the assets/images directory
-const images = importAll(require.context('../assets/images', false, /\.(png|jpe?g|svg)$/));
+import React, { useEffect, useState } from 'react';
+import NavBar from '../components/NavBar';
+import facultyData from '../assets/data/Faculties.json';
 
 function Faculties() {
+    const [imagesLoaded, setImagesLoaded] = useState(false);
+    const [images, setImages] = useState({});
+
+    // Load all faculty images
+    useEffect(() => {
+        const loadImages = async () => {
+            try {
+                // Import all images from the assets/images directory
+                const imageContext = require.context('../assets/images', false, /\.(png|jpe?g|svg)$/);
+                const loadedImages = {};
+
+                imageContext.keys().forEach((key) => {
+                    const imageName = key.replace('./', '').split('.')[0];
+                    loadedImages[imageName] = imageContext(key);
+                });
+
+                setImages(loadedImages);
+                setImagesLoaded(true);
+            } catch (error) {
+                console.error("Error loading images:", error);
+                setImagesLoaded(true); // Set to true anyway so we use fallback images
+            }
+        };
+
+        loadImages();
+    }, []);
+
     // Find principal's data
     const principal = facultyData.find(faculty => faculty.designation === "Principal");
 
@@ -33,11 +47,19 @@ function Faculties() {
     // Helper function to get image source
     const getImageSrc = (profilePhoto) => {
         try {
-            const imageName = profilePhoto.split('/').pop().split('.')[0];
-            // Check if the image exists in our imported images
-            if (images[imageName]) {
-                return images[imageName];
+            // Extract just the filename without path and extension
+            const filename = profilePhoto.split('/').pop().split('.')[0];
+            
+            // Handle special case for Ishwara-Sharma/Ishwarasharma
+            if (filename === "Ishwarasharma" && images["Ishwara-Sharma"]) {
+                return images["Ishwara-Sharma"];
             }
+            
+            // Check if the image exists in our loaded images
+            if (images[filename]) {
+                return images[filename];
+            }
+            
             // If image doesn't exist, return default user image
             return images['default-user'] || '/default-user.png';
         } catch (error) {
@@ -47,14 +69,16 @@ function Faculties() {
     };
 
     return (
-        <div className="user-homepage">
-            <NavBar />
-            <main className="user-content">
+        <div className="alumni-page-layout">
+            <div className="alumni-side-navbar">
+                <NavBar />
+            </div>
+            <div className="alumni-main-content">
                 <div className="faculties-content">
                     <h1 className="section-title">Our Faculties</h1>
 
                     {/* Principal Card */}
-                    {principal && (
+                    {principal && imagesLoaded && (
                         <div className="principal-section">
                             <div className="principal-card">
                                 <div className="faculty-image">
@@ -86,7 +110,7 @@ function Faculties() {
                         </div>
                     )}
 
-                    {Object.entries(facultyByBranch).map(([branch, facultyMembers]) => (
+                    {imagesLoaded && Object.entries(facultyByBranch).map(([branch, facultyMembers]) => (
                         <div key={branch} className="department-section">
                             <h2 className="department-title">{branch}</h2>
                             <div className="faculties-grid">
@@ -110,14 +134,18 @@ function Faculties() {
                                             </h3>
                                             <p className="faculty-designation">{faculty.designation}</p>
                                             <div className="faculty-contact">
-                                                <p>
-                                                    <i className="fas fa-phone"></i>
-                                                    {faculty.phoneNumber}
-                                                </p>
-                                                <p>
-                                                    <i className="fas fa-envelope"></i>
-                                                    {faculty.emailId}
-                                                </p>
+                                                {faculty.phoneNumber && (
+                                                    <p>
+                                                        <i className="fas fa-phone"></i>
+                                                        {faculty.phoneNumber}
+                                                    </p>
+                                                )}
+                                                {faculty.emailId && (
+                                                    <p>
+                                                        <i className="fas fa-envelope"></i>
+                                                        {faculty.emailId}
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -125,10 +153,16 @@ function Faculties() {
                             </div>
                         </div>
                     ))}
+
+                    {!imagesLoaded && (
+                        <div className="loading-container">
+                            <p>Loading faculty data...</p>
+                        </div>
+                    )}
                 </div>
-            </main>
+            </div>
         </div>
-    )
+    );
 }
 
-export default Faculties
+export default Faculties;
