@@ -230,15 +230,19 @@ const Register = () => {
                             <label htmlFor="phone">Phone Number</label>
                             <div className="form-row">
                                 <div className="country-code">
-                                    <input
-                                        type="text"
+                                    <select
                                         id="countryCode"
                                         name="countryCode"
                                         value={formData.countryCode}
                                         onChange={handleChange}
                                         className="login-input"
-                                        placeholder="+91"
-                                    />
+                                    >
+                                        {countryCodes.map(country => (
+                                            <option key={country.code} value={country.code}>
+                                                {country.code} ({country.country})
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="phone-number">
                                     <input
@@ -296,11 +300,11 @@ const Register = () => {
                                     required
                                 >
                                     <option value="">Select Branch</option>
-                                    <option value="Computer Science">Computer Science</option>
-                                    <option value="Electronics & Communication">Electronics & Communication</option>
-                                    <option value="Mechanical">Mechanical</option>
-                                    <option value="Civil">Civil</option>
-                                    <option value="Electrical">Electrical</option>
+                                    {branches.map(branch => (
+                                        <option key={branch} value={branch}>
+                                            {branch}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
