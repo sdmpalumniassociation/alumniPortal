@@ -58,12 +58,22 @@ const getAllUsers = async (req, res) => {
         const users = await User.find({}, '-password').sort({ createdAt: -1 });
         const formattedUsers = users.map(user => ({
             id: user._id,
-            name: user.fullName,
+            fullName: user.fullName,
             email: user.email,
             role: user.role,
             graduationYear: user.graduationYear,
             branch: user.branch,
-            status: 'Active' // You can add a status field to your user model if needed
+            status: 'Active', // You can add a status field to your user model if needed
+            alumniId: user.alumniId,
+            imageUrl: user.imageUrl,
+            currentPosition: user.currentPosition,
+            company: user.company,
+            technicalExpertise: user.technicalExpertise,
+            education: user.education,
+            phone: user.phone,
+            whatsappNumber: user.whatsappNumber,
+            address: user.address,
+            linkedIn: user.linkedIn
         }));
         res.json({ success: true, users: formattedUsers });
     } catch (error) {
