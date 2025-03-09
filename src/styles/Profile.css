@@ -77,22 +77,45 @@
 }
 
 .profile-avatar {
-    width: 100px;
-    height: 100px;
+    position: relative;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     overflow: hidden;
     margin-right: 20px;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
 }
 
 .profile-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.profile-image-upload {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.image-upload-label {
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    display: block;
+    margin: 0;
+}
+
+.image-upload-label:hover {
+    color: #FF6B00;
+}
+
+.profile-avatar:hover .profile-image-upload {
+    opacity: 1;
 }
 
 .profile-name-info {
@@ -252,15 +275,15 @@ select.edit-input {
     border-radius: 50%;
 }
 
-.toggle-input:checked + .toggle-slider {
+.toggle-input:checked+.toggle-slider {
     background-color: #FF9933;
 }
 
-.toggle-input:focus + .toggle-slider {
+.toggle-input:focus+.toggle-slider {
     box-shadow: 0 0 1px #FF9933;
 }
 
-.toggle-input:checked + .toggle-slider:before {
+.toggle-input:checked+.toggle-slider:before {
     transform: translateX(24px);
 }
 
@@ -601,7 +624,7 @@ select.edit-input {
 }
 
 /* Improved form buttons for better touch response */
-.add-education-button, 
+.add-education-button,
 .update-password-button,
 .profile-edit-button button,
 .save-button,
@@ -620,7 +643,7 @@ select.edit-input {
     border: none;
 }
 
-.add-education-button:active, 
+.add-education-button:active,
 .update-password-button:active,
 .profile-edit-button button:active,
 .save-button:active,
@@ -633,52 +656,52 @@ select.edit-input {
     .profile-wrapper {
         padding: 15px 10px;
     }
-    
+
     .profile-container {
         padding: 15px;
     }
-    
+
     .profile-info-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .education-edit-field {
         min-width: 100%;
     }
-    
+
     .education-edit-row {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .add-skill-input {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .add-skill-input button {
         width: 100%;
     }
-    
+
     .edit-buttons {
         flex-direction: column;
         gap: 10px;
         width: 100%;
     }
-    
+
     .edit-buttons button {
         width: 100%;
     }
-    
+
     .profile-header {
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .profile-avatar {
         margin-right: 0;
     }
-    
+
     .phone-input-group,
     .whatsapp-input-group {
         gap: 15px;
