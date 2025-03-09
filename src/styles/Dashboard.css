@@ -88,6 +88,13 @@
   height: auto;
 }
 
+.invitation-image {
+  width: 90%;
+  height: auto;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
 /* Responsive styles */
 @media (max-width: 992px) {
   .dashboard-side-navbar {
@@ -116,6 +123,8 @@
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
+    position: relative;
+    padding-top: 20px;
   }
   
   .dashboard-side-navbar {
