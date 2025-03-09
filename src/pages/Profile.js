@@ -18,7 +18,7 @@ function Profile() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordUpdateError, setPasswordUpdateError] = useState('');
     const [passwordUpdateSuccess, setPasswordUpdateSuccess] = useState('');
-    const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+    // const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
     const branches = [
         'Civil Engineering',
@@ -449,7 +449,7 @@ function Profile() {
                                                             />
                                                         </div>
                                                         <div className="education-edit-field">
-                                                            <label>Field</label>
+                                                            <label>Course</label>
                                                             <input
                                                                 type="text"
                                                                 value={edu.field || ''}

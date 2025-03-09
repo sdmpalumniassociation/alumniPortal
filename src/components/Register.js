@@ -165,83 +165,98 @@ const Register = () => {
         </div> */}
                 <div className="login-right">
                     <form onSubmit={handleSubmit} className="login-form">
-                        <h2 className="register-title">Register to SDM Polytechnic Alumni Association</h2>
+                        <h2 className="register-title">Create an Account</h2>
                         <p className="register-subtitle">Join the SDM Polytechnic Alumni Network</p>
 
+                        {/* Display dialog for successful registration */}
+                        {showDialog && (
+                            <div className="dialog">
+                                <div className="dialog-content">
+                                    <h3>Registration Successful!</h3>
+                                    <p>Your account has been created successfully.</p>
+                                    <p>Please check your email for verification instructions.</p>
+                                    <button onClick={handleDialogClose} className="dialog-button">
+                                        Go to Login
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         <div className="form-group">
-                            <label>Full Name</label>
+                            <label htmlFor="fullName">Full Name</label>
                             <input
                                 type="text"
+                                id="fullName"
                                 name="fullName"
                                 value={formData.fullName}
                                 onChange={handleChange}
                                 className="login-input"
                                 placeholder="Enter your full name"
                                 required
+                                autoComplete="name"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label>Alumni ID</label>
+                            <label htmlFor="alumniId">Alumni ID</label>
                             <input
                                 type="text"
+                                id="alumniId"
                                 name="alumniId"
                                 value={formData.alumniId}
+                                onChange={handleChange}
                                 className="login-input"
+                                placeholder="Alumni ID"
                                 readOnly
-                                disabled
                             />
-                            <small className="form-text text-muted">
-                                Your Alumni ID will be automatically assigned
-                            </small>
                         </div>
 
                         <div className="form-group">
-                            <label>Email</label>
+                            <label htmlFor="email">Email</label>
                             <input
                                 type="email"
+                                id="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="login-input"
-                                placeholder="Enter your email address"
+                                placeholder="Enter your email"
                                 required
+                                autoComplete="email"
                             />
                         </div>
 
-                        <div className="form-row">
-                            <div className="form-group country-code">
-                                <label>Country Code</label>
-                                <select
-                                    name="countryCode"
-                                    value={formData.countryCode}
-                                    onChange={handleChange}
-                                    className="login-input"
-                                    required
-                                >
-                                    {countryCodes.map(({ code, country }) => (
-                                        <option key={code} value={code}>
-                                            {code} ({country})
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="form-group phone-number">
-                                <label>Phone Number</label>
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    className="login-input"
-                                    placeholder="Enter your phone number"
-                                    required
-                                />
+                        <div className="form-group">
+                            <label htmlFor="phone">Phone Number</label>
+                            <div className="form-row">
+                                <div className="country-code">
+                                    <input
+                                        type="text"
+                                        id="countryCode"
+                                        name="countryCode"
+                                        value={formData.countryCode}
+                                        onChange={handleChange}
+                                        className="login-input"
+                                        placeholder="+91"
+                                    />
+                                </div>
+                                <div className="phone-number">
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="login-input"
+                                        placeholder="Enter your phone number"
+                                        required
+                                        autoComplete="tel"
+                                    />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="form-group checkbox-group">
+                        <div className="checkbox-group">
                             <label className="checkbox-label">
                                 <input
                                     type="checkbox"
@@ -256,23 +271,24 @@ const Register = () => {
 
                         {!formData.whatsappSameAsPhone && (
                             <div className="form-group">
-                                <label>WhatsApp Number</label>
+                                <label htmlFor="whatsappNumber">WhatsApp Number</label>
                                 <input
-                                    type="tel"
+                                    type="text"
+                                    id="whatsappNumber"
                                     name="whatsappNumber"
                                     value={formData.whatsappNumber}
                                     onChange={handleChange}
                                     className="login-input"
                                     placeholder="Enter your WhatsApp number"
-                                    required
                                 />
                             </div>
                         )}
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label>Branch</label>
+                                <label htmlFor="branch">Branch</label>
                                 <select
+                                    id="branch"
                                     name="branch"
                                     value={formData.branch}
                                     onChange={handleChange}
@@ -280,17 +296,18 @@ const Register = () => {
                                     required
                                 >
                                     <option value="">Select Branch</option>
-                                    {branches.map(branch => (
-                                        <option key={branch} value={branch}>
-                                            {branch}
-                                        </option>
-                                    ))}
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Electronics & Communication">Electronics & Communication</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Electrical">Electrical</option>
                                 </select>
                             </div>
 
                             <div className="form-group">
-                                <label>Graduation Year</label>
+                                <label htmlFor="graduationYear">Graduation Year</label>
                                 <select
+                                    id="graduationYear"
                                     name="graduationYear"
                                     value={formData.graduationYear}
                                     onChange={handleChange}
@@ -308,29 +325,33 @@ const Register = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Password</label>
+                            <label htmlFor="password">Password</label>
                             <input
                                 type="password"
+                                id="password"
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
                                 className={`login-input ${errors.password ? 'error-input' : ''}`}
                                 placeholder="Create a password (minimum 8 characters)"
                                 required
+                                autoComplete="new-password"
                             />
                             {errors.password && <span className="error-message">{errors.password}</span>}
                         </div>
 
                         <div className="form-group">
-                            <label>Confirm Password</label>
+                            <label htmlFor="confirmPassword">Confirm Password</label>
                             <input
                                 type="password"
+                                id="confirmPassword"
                                 name="confirmPassword"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 className={`login-input ${errors.confirmPassword ? 'error-input' : ''}`}
                                 placeholder="Confirm your password"
                                 required
+                                autoComplete="new-password"
                             />
                             {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
                         </div>
@@ -347,16 +368,6 @@ const Register = () => {
                     </form>
                 </div>
             </div>
-
-            {showDialog && (
-                <div className="dialog">
-                    <div className="dialog-content">
-                        <p>Registration successful! Your Alumni ID is {formData.alumniId}</p>
-                        <p>Please save this ID for future reference.</p>
-                        <button onClick={handleDialogClose} className="dialog-button">Okay</button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
