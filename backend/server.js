@@ -10,7 +10,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://localhost:4000', 'https://www.sdmpalumniassociation.in', 'https://alumni-portal-admin-lake.vercel.app', 'http://localhost:3001', 'http://localhost:4001', 'https://admin.sdmpalumniassociation.in'],
+    origin: ['http://localhost:3000', 'http://localhost:4000', 'https://www.sdmpalumniassociation.in', 'https://alumni-portal-admin-lake.vercel.app', 'http://localhost:3001', 'http://localhost:4001', 'https://admin.sdmpalumniassociation.in', 'https://sdmpalumniassociation.in'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
