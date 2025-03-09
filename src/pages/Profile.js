@@ -66,7 +66,10 @@ function Profile() {
     };
 
     const handleEdit = () => {
-        setTempUserData({ ...userData });
+        setTempUserData({
+            ...userData,
+            imageUrl: userData.imageUrl // Explicitly include imageUrl
+        });
         setWhatsAppSameAsPhone(userData.phone === userData.whatsappNumber);
         setEditMode(true);
         setError(null);

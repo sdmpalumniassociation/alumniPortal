@@ -328,15 +328,25 @@ const userController = {
                 }
             }
 
+            // Get the current user to preserve the imageUrl if no new image is uploaded
+            const currentUser = await User.findById(userId);
+            if (!currentUser) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'User not found'
+                });
+            }
+
             // Prepare update data
             const updateData = {
                 ...userData,
                 hidePhone: userData.hidePhone === true || userData.hidePhone === 'true',
                 education: Array.isArray(userData.education) ? userData.education : [],
-                technicalExpertise: Array.isArray(userData.technicalExpertise) ? userData.technicalExpertise : []
+                technicalExpertise: Array.isArray(userData.technicalExpertise) ? userData.technicalExpertise : [],
+                imageUrl: currentUser.imageUrl // Preserve existing imageUrl by default
             };
 
-            // Add image URL if file was uploaded
+            // Add new image URL if file was uploaded
             if (req.file && req.file.location) {
                 updateData.imageUrl = req.file.location;
             }
@@ -350,13 +360,6 @@ const userController = {
                     runValidators: true
                 }
             ).select('-password');
-
-            if (!updatedUser) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'User not found'
-                });
-            }
 
             res.json({
                 success: true,
