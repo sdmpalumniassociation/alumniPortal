@@ -302,7 +302,7 @@ function Profile() {
                         <div className="profile-header">
                             <div className="profile-avatar">
                                 <img
-                                    src={userData.imageUrl}
+                                    src={editMode && selectedFile ? URL.createObjectURL(selectedFile) : userData.imageUrl}
                                     alt="Profile"
                                     onError={(e) => {
                                         e.target.src = `https://ny2fsuwtzwiq1t6s.public.blob.vercel-storage.com/default-user-JkNfvWTp7X1p14TXs1462jMc4PgNew.png`;
@@ -310,11 +310,16 @@ function Profile() {
                                 />
                                 {editMode && (
                                     <div className="profile-image-upload">
+                                        <label htmlFor="profile-image-input" className="image-upload-label">
+                                            <i className="fas fa-camera"></i> Change Photo
+                                        </label>
                                         <input
+                                            id="profile-image-input"
                                             type="file"
                                             accept="image/*"
                                             onChange={handleFileChange}
                                             name="profileImage"
+                                            style={{ display: 'none' }}
                                         />
                                     </div>
                                 )}
