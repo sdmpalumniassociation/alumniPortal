@@ -81,7 +81,8 @@
     padding: 15px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     transition: all 0.2s ease;
